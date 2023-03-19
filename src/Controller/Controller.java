@@ -7,9 +7,10 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Controller {
     private Matrix matrix = new Matrix();
-    private Matrix preMatrix = matrix;
+    private Matrix preMatrix = null;
     private int n = Matrix.getN();
     private boolean isMoved = false;
+    private boolean isAdded = false;
     
     
     private static Controller instance = null;
@@ -22,6 +23,7 @@ public class Controller {
     }
     
     public void addNewNumber(){
+        System.out.println("New number");
         while(true){
             int randRow = ThreadLocalRandom.current().nextInt(1, n + 1);
             int randCol = ThreadLocalRandom.current().nextInt(1, n + 1);
@@ -36,7 +38,6 @@ public class Controller {
     
     public void moveNumber(KeyEvent e){
         System.out.println("Move");
-        preMatrix = matrix;
         switch (e.getKeyCode()) {
             case KeyEvent.VK_LEFT -> {
                 for(int i = 1; i <= n; i++){
@@ -113,12 +114,13 @@ public class Controller {
     }
     
     public void sumOfValue(KeyEvent e){
-        preMatrix = matrix;
+        System.out.println("Sum");
         switch (e.getKeyCode()) {
             case KeyEvent.VK_LEFT -> {
                 for(int i = 1; i <= n; i++){
                     for(int j = 1; j <= n; j++){
                         if(Objects.equals(matrix.getValue(i, j), matrix.getValue(i, j + 1))){
+                            isAdded = true;
                             matrix.setValue(i, j, 2 * matrix.getValue(i, j + 1));
                             matrix.setValue(i, j + 1, 0);
                         }
@@ -129,6 +131,7 @@ public class Controller {
                 for(int i = 1; i <= n; i++){
                     for(int j = n; j >= 1; j--){
                         if(Objects.equals(matrix.getValue(i, j), matrix.getValue(i, j - 1))){
+                            isAdded = true;
                             matrix.setValue(i, j, 2 * matrix.getValue(i, j - 1));
                             matrix.setValue(i, j - 1, 0);
                         }
@@ -139,6 +142,7 @@ public class Controller {
                 for(int i = 1; i <= n; i++){
                     for(int j = 1; j <= n; j++){
                         if(Objects.equals(matrix.getValue(i, j), matrix.getValue(i + 1, j))){
+                            isAdded = true;
                             matrix.setValue(i, j, 2 * matrix.getValue(i + 1, j));
                             matrix.setValue(i + 1, j, 0);
                         }
@@ -149,6 +153,7 @@ public class Controller {
                 for(int i = n; i >= 1; i--){
                     for(int j = 1; j <= n; j++){
                         if(Objects.equals(matrix.getValue(i, j), matrix.getValue(i - 1, j))){
+                            isAdded = true;
                             matrix.setValue(i, j, 2 * matrix.getValue(i - 1, j));
                             matrix.setValue(i - 1, j, 0);
                         }
@@ -183,6 +188,15 @@ public class Controller {
     public void setIsMoved(boolean isMoved) {
         this.isMoved = isMoved;
     }
+
+    public boolean isIsAdded() {
+        return isAdded;
+    }
+
+    public void setIsAdded(boolean isAdded) {
+        this.isAdded = isAdded;
+    }
+    
     
     
 }

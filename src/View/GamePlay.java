@@ -1,6 +1,7 @@
 package View;
 
 import Controller.Controller;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -8,6 +9,7 @@ import java.awt.event.KeyListener;
 import javax.swing.JLabel;
 import java.util.*;
 import javax.swing.JFrame;
+import javax.swing.Timer;
 
 public class GamePlay extends JFrame{
     
@@ -22,14 +24,15 @@ public class GamePlay extends JFrame{
         initComponents();
         initUI();
         initBoard();
-        initButton();
         renderBoard();
         
     }
                 
     void initUI(){
-        this.setSize(800, 600);
+        this.setSize(650, 480);
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
+        
     }
     
     
@@ -51,25 +54,52 @@ public class GamePlay extends JFrame{
         board.add(label15);
         board.add(label16);
         
-        label2.addKeyListener(new KeyListener(){
+        panel4.addKeyListener(new KeyListener(){
             @Override
             public void keyTyped(KeyEvent e) {
             }
 
             @Override
             public void keyPressed(KeyEvent e) {
+                controller.setPreMatrix(controller.getMatrix());
+                controller.getMatrix().output();
+                controller.getPreMatrix().output();
                 controller.moveNumber(e);
+                System.out.println("PreMatrix");
+                controller.getPreMatrix().output();
+                
                 controller.sumOfValue(e);
                 controller.moveNumber(e);
-                if(controller.isIsMoved() == true){
-                    controller.addNewNumber();
-                    controller.setIsMoved(false);
-                }
-                else{
-                    // hien thi thong bao
-                }
-                renderBoard();
                 controller.getMatrix().output();
+                renderBoard();
+                
+                int delay = 300; // Thời gian trễ là 1 giây
+                Timer timer = new Timer(delay, new ActionListener(){
+                    boolean isFirstTime = true;
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if(isFirstTime == true){
+                            System.out.println("Delay");
+                            isFirstTime = false;
+                            if(controller.isIsMoved() == true || controller.isIsAdded() == true){
+                                controller.setPreMatrix(controller.getMatrix());
+                                controller.addNewNumber();
+                                controller.setIsMoved(false);
+                                renderBoard();
+                                controller.getMatrix().output();
+                            }
+                            else{
+                                // hien thi thong bao
+                            }
+                        }
+                        else{
+                            ((Timer)e.getSource()).stop();
+                        }
+                    }
+                });
+                timer.start(); // Bắt đầu thực hiện Timer
+                
+                
             }
 
             @Override
@@ -77,18 +107,7 @@ public class GamePlay extends JFrame{
                 System.out.println("Release");
             }
         });
-        label2.requestFocus();
-    }
-    
-    void initButton(){
-        homeButton.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Undo");
-                controller.setMatrix(controller.getPreMatrix());
-                renderBoard();
-            }
-        });
+        panel4.requestFocus();
     }
     
     void renderBoard(){
@@ -97,7 +116,23 @@ public class GamePlay extends JFrame{
         int index = 0;
         for(int i = 1; i <= n; i++){
             for(int j = 1; j <= n; j++){
-                board.get(index).setText(String.valueOf(controller.getMatrix().getValue(i, j)));
+                int value = controller.getMatrix().getValue(i, j);
+                board.get(index).setOpaque(true);
+                switch (value) {
+                    case 2 -> board.get(index).setBackground(Color.red);
+                    case 4 -> board.get(index).setBackground(Color.blue);
+                    case 8 -> board.get(index).setBackground(Color.green);
+                    case 16 -> board.get(index).setBackground(Color.yellow);
+                    case 32 -> board.get(index).setBackground(Color.ORANGE);
+                    case 64 -> board.get(index).setBackground(Color.PINK);
+                    case 128 -> board.get(index).setBackground(Color.magenta);
+                    default -> {
+                        board.get(index).setBackground(Color.LIGHT_GRAY);
+                        board.get(index).setOpaque(false);
+                    }
+                }
+                
+                board.get(index).setText(String.valueOf(value));
                 index++;
             }
         }   
@@ -117,7 +152,7 @@ public class GamePlay extends JFrame{
         restartButton = new javax.swing.JButton();
         panel2 = new javax.swing.JPanel();
         panel3 = new javax.swing.JPanel();
-        jPanel6 = new javax.swing.JPanel();
+        panel4 = new javax.swing.JPanel();
         label1 = new javax.swing.JLabel();
         label2 = new javax.swing.JLabel();
         label3 = new javax.swing.JLabel();
@@ -140,6 +175,11 @@ public class GamePlay extends JFrame{
         homeButton.setText("Home");
 
         undoButton.setText("Undo");
+        undoButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                undoButtonMouseClicked(evt);
+            }
+        });
 
         restartButton.setText("Restart");
         restartButton.addActionListener(new java.awt.event.ActionListener() {
@@ -153,7 +193,7 @@ public class GamePlay extends JFrame{
         panel1Layout.setHorizontalGroup(
             panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel1Layout.createSequentialGroup()
-                .addContainerGap(345, Short.MAX_VALUE)
+                .addContainerGap(371, Short.MAX_VALUE)
                 .addComponent(homeButton)
                 .addGap(18, 18, 18)
                 .addComponent(undoButton)
@@ -178,7 +218,7 @@ public class GamePlay extends JFrame{
         panel2.setLayout(panel2Layout);
         panel2Layout.setHorizontalGroup(
             panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 624, Short.MAX_VALUE)
+            .addGap(0, 650, Short.MAX_VALUE)
         );
         panel2Layout.setVerticalGroup(
             panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -187,66 +227,66 @@ public class GamePlay extends JFrame{
 
         getContentPane().add(panel2, java.awt.BorderLayout.PAGE_END);
 
-        jPanel6.setLayout(new java.awt.GridLayout(4, 0, 10, 10));
-        jPanel6.add(label1);
+        panel4.setLayout(new java.awt.GridLayout(4, 0, 10, 10));
+        panel4.add(label1);
 
         label2.setText("jLabel2");
-        jPanel6.add(label2);
+        panel4.add(label2);
 
         label3.setText("jLabel3");
-        jPanel6.add(label3);
+        panel4.add(label3);
 
         label4.setText("jLabel4");
-        jPanel6.add(label4);
+        panel4.add(label4);
 
         label5.setText("jLabel5");
-        jPanel6.add(label5);
+        panel4.add(label5);
 
         label6.setText("jLabel6");
-        jPanel6.add(label6);
+        panel4.add(label6);
 
         label7.setText("jLabel7");
-        jPanel6.add(label7);
+        panel4.add(label7);
 
         label8.setText("jLabel8");
-        jPanel6.add(label8);
+        panel4.add(label8);
 
         label9.setText("jLabel9");
-        jPanel6.add(label9);
+        panel4.add(label9);
 
         label10.setText("jLabel10");
-        jPanel6.add(label10);
+        panel4.add(label10);
 
         label11.setText("jLabel11");
-        jPanel6.add(label11);
+        panel4.add(label11);
 
         label12.setText("jLabel12");
-        jPanel6.add(label12);
+        panel4.add(label12);
 
         label13.setText("jLabel13");
-        jPanel6.add(label13);
+        panel4.add(label13);
 
         label14.setText("jLabel14");
-        jPanel6.add(label14);
+        panel4.add(label14);
 
         label15.setText("jLabel15");
-        jPanel6.add(label15);
+        panel4.add(label15);
 
         label16.setText("jLabel16");
-        jPanel6.add(label16);
+        panel4.add(label16);
 
         javax.swing.GroupLayout panel3Layout = new javax.swing.GroupLayout(panel3);
         panel3.setLayout(panel3Layout);
         panel3Layout.setHorizontalGroup(
             panel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel3Layout.createSequentialGroup()
-                .addGap(191, 191, 191)
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(179, Short.MAX_VALUE))
+                .addGap(201, 201, 201)
+                .addComponent(panel4, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(195, Short.MAX_VALUE))
         );
         panel3Layout.setVerticalGroup(
             panel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
+            .addComponent(panel4, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
         );
 
         getContentPane().add(panel3, java.awt.BorderLayout.CENTER);
@@ -257,6 +297,14 @@ public class GamePlay extends JFrame{
     private void restartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restartButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_restartButtonActionPerformed
+
+    private void undoButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_undoButtonMouseClicked
+        System.out.println("Undo");
+        controller.setMatrix(controller.getPreMatrix());
+        System.out.println("Current matrix:");
+        controller.getMatrix().output();
+        renderBoard();
+    }//GEN-LAST:event_undoButtonMouseClicked
 
     /**
      * @param args the command line arguments
@@ -295,7 +343,6 @@ public class GamePlay extends JFrame{
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton homeButton;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JLabel label1;
     private javax.swing.JLabel label10;
     private javax.swing.JLabel label11;
@@ -315,6 +362,7 @@ public class GamePlay extends JFrame{
     private javax.swing.JPanel panel1;
     private javax.swing.JPanel panel2;
     private javax.swing.JPanel panel3;
+    private javax.swing.JPanel panel4;
     private javax.swing.JButton restartButton;
     private javax.swing.JButton undoButton;
     // End of variables declaration//GEN-END:variables
