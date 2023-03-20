@@ -62,15 +62,14 @@ public class GamePlay extends JFrame{
             @Override
             public void keyPressed(KeyEvent e) {
                 controller.setPreMatrix(controller.getMatrix());
-                controller.getMatrix().output();
-                controller.getPreMatrix().output();
                 controller.moveNumber(e);
                 System.out.println("PreMatrix");
                 controller.getPreMatrix().output();
+                System.out.println("CurMatrix");
+                controller.getMatrix().output();
                 
                 controller.sumOfValue(e);
                 controller.moveNumber(e);
-                controller.getMatrix().output();
                 renderBoard();
                 
                 int delay = 300; // Thời gian trễ là 1 giây
