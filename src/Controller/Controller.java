@@ -7,7 +7,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Controller {
     private Matrix matrix = new Matrix();
-    private Matrix preMatrix = null;
+    private Matrix preMatrix = new Matrix();
     private int n = Matrix.getN();
     private boolean isMoved = false;
     private boolean isAdded = false;
@@ -36,10 +36,8 @@ public class Controller {
         }          
     }
     
+    
     public void moveNumber(KeyEvent e){
-        System.out.println("Pre");
-        preMatrix.output();
-        System.out.println("Move");
         switch (e.getKeyCode()) {
             case KeyEvent.VK_LEFT -> {
                 for(int i = 1; i <= n; i++){
@@ -110,7 +108,6 @@ public class Controller {
                 }
             }
             default -> {
-                // Hien thi message "Nhap sai"
             }
         }
         System.out.println("After");
@@ -200,7 +197,5 @@ public class Controller {
     public void setIsAdded(boolean isAdded) {
         this.isAdded = isAdded;
     }
-    
-    
     
 }

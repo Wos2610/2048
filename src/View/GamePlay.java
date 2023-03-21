@@ -1,6 +1,7 @@
 package View;
 
 import Controller.Controller;
+import Model.Matrix;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -56,54 +57,49 @@ public class GamePlay extends JFrame{
         
         panel4.addKeyListener(new KeyListener(){
             @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
             public void keyPressed(KeyEvent e) {
-                controller.setPreMatrix(controller.getMatrix());
+                Matrix preMatrix = new Matrix(controller.getMatrix().getMatrix());
+                controller.setPreMatrix(preMatrix);
                 controller.moveNumber(e);
-                System.out.println("PreMatrix");
-                controller.getPreMatrix().output();
-                System.out.println("CurMatrix");
-                controller.getMatrix().output();
-                
                 controller.sumOfValue(e);
                 controller.moveNumber(e);
                 renderBoard();
-                
+
                 int delay = 300; // Thời gian trễ là 1 giây
-                Timer timer = new Timer(delay, new ActionListener(){
+                Timer timer = new Timer(delay, new ActionListener() {
                     boolean isFirstTime = true;
+
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        if(isFirstTime == true){
+                        if (isFirstTime == true) {
                             System.out.println("Delay");
                             isFirstTime = false;
-                            if(controller.isIsMoved() == true || controller.isIsAdded() == true){
+                            if (controller.isIsMoved() == true || controller.isIsAdded() == true) {
                                 //controller.setPreMatrix(controller.getMatrix());
                                 controller.addNewNumber();
                                 controller.setIsMoved(false);
                                 renderBoard();
                                 controller.getMatrix().output();
-                            }
-                            else{
+                            } else {
                                 // hien thi thong bao
                             }
-                        }
-                        else{
-                            ((Timer)e.getSource()).stop();
+                        } else {
+                            ((Timer) e.getSource()).stop();
                         }
                     }
                 });
                 timer.start(); // Bắt đầu thực hiện Timer
-                
-                
+
             }
 
             @Override
             public void keyReleased(KeyEvent e) {
                 System.out.println("Release");
+            }
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+                throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
             }
         });
         panel4.requestFocus();
