@@ -37,6 +37,8 @@ public class Controller {
     }
     
     public void moveNumber(KeyEvent e){
+        System.out.println("Pre");
+        preMatrix.output();
         System.out.println("Move");
         switch (e.getKeyCode()) {
             case KeyEvent.VK_LEFT -> {
@@ -111,6 +113,8 @@ public class Controller {
                 // Hien thi message "Nhap sai"
             }
         }
+        System.out.println("After");
+        preMatrix.output();
     }
     
     public void sumOfValue(KeyEvent e){

@@ -81,7 +81,7 @@ public class GamePlay extends JFrame{
                             System.out.println("Delay");
                             isFirstTime = false;
                             if(controller.isIsMoved() == true || controller.isIsAdded() == true){
-                                controller.setPreMatrix(controller.getMatrix());
+                                //controller.setPreMatrix(controller.getMatrix());
                                 controller.addNewNumber();
                                 controller.setIsMoved(false);
                                 renderBoard();
