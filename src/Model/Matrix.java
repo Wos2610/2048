@@ -56,7 +56,7 @@ public class Matrix {
         return matrix.get(i).set(j, value);
     }
 
-    public ArrayList<ArrayList<Integer>> getMatrix() {
+    public ArrayList<ArrayList<Integer>> getMatrixArray() {
         return matrix;
     }
 }
