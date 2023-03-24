@@ -1,9 +1,18 @@
 package Controller;
 
 import Model.Matrix;
+import View.PanelRound;
+import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
+import javax.swing.JPanel;
+import org.jdesktop.core.animation.timing.Animator;
+import org.jdesktop.core.animation.timing.PropertySetter;
+import org.jdesktop.core.animation.timing.TimingSource;
+import org.jdesktop.core.animation.timing.interpolators.SplineInterpolator;
+import org.jdesktop.swing.animation.timing.sources.SwingTimerTimingSource;
 
 public class Controller {
     private Matrix matrix = new Matrix();
@@ -11,7 +20,8 @@ public class Controller {
     private int n = Matrix.getN();
     private boolean isMoved = false;
     private boolean isAdded = false;
-    
+    private Animator animator;
+    private int newPanelIndex;
     
     private static Controller instance = null;
     
@@ -31,6 +41,8 @@ public class Controller {
                 int randNum = ThreadLocalRandom.current().nextInt(2);
                 int randValue = (randNum == 0) ? 2 : 4;
                 matrix.setValue(randRow, randCol, randValue);
+                // Index của Panel : 0 -> 15
+                newPanelIndex = (randRow - 1) * 4 + randCol - 1;
                 return;
             }
         }          
@@ -196,6 +208,29 @@ public class Controller {
 
     public void setIsAdded(boolean isAdded) {
         this.isAdded = isAdded;
+    }
+
+    public int getNewPanelIndex() {
+        return newPanelIndex;
+    }
+
+    public void setNewPanelIndex(int newPanelIndex) {
+        this.newPanelIndex = newPanelIndex;
+    }
+
+    public void addNewPanelAnimation(PanelRound panel){
+        if(animator != null && animator.isRunning()){
+            animator.stop();
+        }
+        TimingSource timingSource = new SwingTimerTimingSource();
+        animator = new Animator.Builder(timingSource)
+                .setDuration(1000, TimeUnit.MILLISECONDS)
+                .setInterpolator(new SplineInterpolator(0.4, 0.0, 0.2, 1.0))
+                .addTarget(PropertySetter.getTarget(panel, "size", new Dimension(0, 0), new Dimension(100, 100) ))
+                .build();
+        
+        timingSource.init();
+        animator.start();
     }
     
 }

@@ -9,9 +9,14 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.JLabel;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import org.jdesktop.core.animation.timing.Animator;
+import org.jdesktop.core.animation.timing.TimingSource;
+import org.jdesktop.core.animation.timing.TimingTargetAdapter;
+import org.jdesktop.swing.animation.timing.sources.SwingTimerTimingSource;
 
 public class GamePlay extends JFrame{
     
@@ -19,6 +24,7 @@ public class GamePlay extends JFrame{
     private ArrayList<JLabel> boardLabel = new ArrayList<>();
     private ArrayList<PanelRound> boardPanel = new ArrayList<>();
     int n = controller.getMatrix().getN();
+    private int newPanelIndex;
     
     /**
      * Creates new form GamePlay
@@ -79,41 +85,97 @@ public class GamePlay extends JFrame{
         panel4.addKeyListener(new KeyListener(){
             @Override
             public void keyPressed(KeyEvent e) {
-                Matrix preMatrix1 = new Matrix(controller.getMatrix().getMatrixArray());
-                controller.setPreMatrix(preMatrix1);
-                controller.moveNumber(e);
-                Matrix preMatrix2 = new Matrix(controller.getMatrix().getMatrixArray());
-                controller.setPreMatrix(preMatrix2);
-                controller.sumOfValue(e);
-                controller.moveNumber(e);
-                renderBoard();
+//                Matrix preMatrix1 = new Matrix(controller.getMatrix().getMatrixArray());
+//                controller.setPreMatrix(preMatrix1);
+//                controller.moveNumber(e);
+//                Matrix preMatrix2 = new Matrix(controller.getMatrix().getMatrixArray());
+//                controller.setPreMatrix(preMatrix2);
+//                controller.sumOfValue(e);
+//                controller.moveNumber(e);
+//                renderBoard();
 
-                int delay = 300; // Thời gian trễ là 1 giây
-                Timer timer = new Timer(delay, new ActionListener() {
-                    boolean isFirstTime = true;
+//                int delay = 300; // Thời gian trễ là 1 giây
+//                Timer timer = new Timer(delay, new ActionListener() {
+//                    boolean isFirstTime = true;
+//
+//                    @Override
+//                    public void actionPerformed(ActionEvent e) {
+//                        if (isFirstTime == true) {
+//                            System.out.println("Delay");
+//                            isFirstTime = false;
+//                            if (controller.isIsMoved() == true || controller.isIsAdded() == true) {
+//                                Matrix preMatrix3 = new Matrix(controller.getMatrix().getMatrixArray());
+//                                controller.setPreMatrix(preMatrix3);
+//                                controller.addNewNumber();
+//                                controller.addNewPanelAnimation(boardPanel.get(controller.getNewPanelIndex()));
+//                                controller.setIsMoved(false);
+//                                renderBoard();
+//                                controller.getMatrix().output();
+//                            } else {
+//                                // hien thi thong bao
+//                            }
+//                        } else {
+//                            ((Timer) e.getSource()).stop();
+//                        }
+//                    }
+//                });
+//                timer.start(); // Bắt đầu thực hiện Timer
+
+                TimingSource timingSource = new SwingTimerTimingSource();
+                Animator animator1 = new Animator.Builder(timingSource)
+                        .setDuration(1, TimeUnit.MILLISECONDS)
+                        .addTarget(new TimingTargetAdapter(){
+                            @Override
+                            public void timingEvent(Animator source, double fraction) {
+                                Matrix preMatrix1 = new Matrix(controller.getMatrix().getMatrixArray());
+                                controller.setPreMatrix(preMatrix1);
+                                controller.moveNumber(e);
+                                Matrix preMatrix2 = new Matrix(controller.getMatrix().getMatrixArray());
+                                controller.setPreMatrix(preMatrix2);
+                                controller.sumOfValue(e);
+                                controller.moveNumber(e);
+                                renderBoard();
+                            }
 
                     @Override
-                    public void actionPerformed(ActionEvent e) {
-                        if (isFirstTime == true) {
-                            System.out.println("Delay");
-                            isFirstTime = false;
-                            if (controller.isIsMoved() == true || controller.isIsAdded() == true) {
-                                Matrix preMatrix3 = new Matrix(controller.getMatrix().getMatrixArray());
-                                controller.setPreMatrix(preMatrix3);
-                                controller.addNewNumber();
-                                controller.setIsMoved(false);
-                                renderBoard();
-                                controller.getMatrix().output();
-                            } else {
-                                // hien thi thong bao
-                            }
-                        } else {
-                            ((Timer) e.getSource()).stop();
-                        }
+                    public void end(Animator animator1) {
+                        animator1.stop();
                     }
-                });
-                timer.start(); // Bắt đầu thực hiện Timer
+                            
+                            
+                        })
+                        .build();
+                
+                Animator animator2 = new Animator.Builder(timingSource)
+                        .setDuration(10, TimeUnit.MILLISECONDS)
+                        .addTarget(new TimingTargetAdapter(){
+                            @Override
+                            public void timingEvent(Animator source, double fraction) {
+                                System.out.println("Delay");
+                                if (controller.isIsMoved() == true || controller.isIsAdded() == true) {
+                                    Matrix preMatrix3 = new Matrix(controller.getMatrix().getMatrixArray());
+                                    controller.setPreMatrix(preMatrix3);
+                                    controller.addNewNumber();
+                                    controller.addNewPanelAnimation(boardPanel.get(controller.getNewPanelIndex()));
+                                    controller.setIsMoved(false);
+                                    renderBoard();
+                                    controller.getMatrix().output();
+                                } else {
+                                    // hien thi thong bao
+                                }
+                            }
 
+                            @Override
+                            public void end(Animator animator2) {
+                                animator2.stop();
+                            }  
+                        })
+                        .build();
+                
+                timingSource.init();
+                animator1.start();
+                animator2.start();
+                
             }
 
             @Override
@@ -291,6 +353,7 @@ public class GamePlay extends JFrame{
         panel4.setLayout(new java.awt.GridLayout(4, 0, 10, 10));
 
         panelRound1.setMaximumSize(new java.awt.Dimension(100, 100));
+        panelRound1.setPreferredSize(new java.awt.Dimension(100, 100));
         panelRound1.setRoundBottomLeft(15);
         panelRound1.setRoundBottomRight(15);
         panelRound1.setRoundTopLeft(15);
@@ -304,6 +367,7 @@ public class GamePlay extends JFrame{
         panel4.add(panelRound1);
 
         panelRound2.setMaximumSize(new java.awt.Dimension(100, 100));
+        panelRound2.setPreferredSize(new java.awt.Dimension(100, 100));
         panelRound2.setRoundBottomLeft(15);
         panelRound2.setRoundBottomRight(15);
         panelRound2.setRoundTopLeft(15);
@@ -317,6 +381,8 @@ public class GamePlay extends JFrame{
         panel4.add(panelRound2);
 
         panelRound3.setMaximumSize(new java.awt.Dimension(100, 100));
+        panelRound3.setMinimumSize(new java.awt.Dimension(0, 0));
+        panelRound3.setPreferredSize(new java.awt.Dimension(100, 100));
         panelRound3.setRoundBottomLeft(15);
         panelRound3.setRoundBottomRight(15);
         panelRound3.setRoundTopLeft(15);
@@ -330,6 +396,7 @@ public class GamePlay extends JFrame{
         panel4.add(panelRound3);
 
         panelRound4.setMaximumSize(new java.awt.Dimension(100, 100));
+        panelRound4.setPreferredSize(new java.awt.Dimension(100, 100));
         panelRound4.setRoundBottomLeft(15);
         panelRound4.setRoundBottomRight(15);
         panelRound4.setRoundTopLeft(15);
@@ -343,6 +410,7 @@ public class GamePlay extends JFrame{
         panel4.add(panelRound4);
 
         panelRound5.setMaximumSize(new java.awt.Dimension(100, 100));
+        panelRound5.setPreferredSize(new java.awt.Dimension(100, 100));
         panelRound5.setRoundBottomLeft(15);
         panelRound5.setRoundBottomRight(15);
         panelRound5.setRoundTopLeft(15);
@@ -356,6 +424,7 @@ public class GamePlay extends JFrame{
         panel4.add(panelRound5);
 
         panelRound6.setMaximumSize(new java.awt.Dimension(100, 100));
+        panelRound6.setPreferredSize(new java.awt.Dimension(100, 100));
         panelRound6.setRoundBottomLeft(15);
         panelRound6.setRoundBottomRight(15);
         panelRound6.setRoundTopLeft(15);
@@ -369,6 +438,7 @@ public class GamePlay extends JFrame{
         panel4.add(panelRound6);
 
         panelRound7.setMaximumSize(new java.awt.Dimension(100, 100));
+        panelRound7.setPreferredSize(new java.awt.Dimension(100, 100));
         panelRound7.setRoundBottomLeft(15);
         panelRound7.setRoundBottomRight(15);
         panelRound7.setRoundTopLeft(15);
@@ -382,6 +452,7 @@ public class GamePlay extends JFrame{
         panel4.add(panelRound7);
 
         panelRound8.setMaximumSize(new java.awt.Dimension(100, 100));
+        panelRound8.setPreferredSize(new java.awt.Dimension(100, 100));
         panelRound8.setRoundBottomLeft(15);
         panelRound8.setRoundBottomRight(15);
         panelRound8.setRoundTopLeft(15);
@@ -395,6 +466,7 @@ public class GamePlay extends JFrame{
         panel4.add(panelRound8);
 
         panelRound9.setMaximumSize(new java.awt.Dimension(100, 100));
+        panelRound9.setPreferredSize(new java.awt.Dimension(100, 100));
         panelRound9.setRoundBottomLeft(15);
         panelRound9.setRoundBottomRight(15);
         panelRound9.setRoundTopLeft(15);
@@ -408,6 +480,7 @@ public class GamePlay extends JFrame{
         panel4.add(panelRound9);
 
         panelRound10.setMaximumSize(new java.awt.Dimension(100, 100));
+        panelRound10.setPreferredSize(new java.awt.Dimension(100, 100));
         panelRound10.setRoundBottomLeft(15);
         panelRound10.setRoundBottomRight(15);
         panelRound10.setRoundTopLeft(15);
@@ -421,6 +494,7 @@ public class GamePlay extends JFrame{
         panel4.add(panelRound10);
 
         panelRound11.setMaximumSize(new java.awt.Dimension(100, 100));
+        panelRound11.setPreferredSize(new java.awt.Dimension(100, 100));
         panelRound11.setRoundBottomLeft(15);
         panelRound11.setRoundBottomRight(15);
         panelRound11.setRoundTopLeft(15);
@@ -434,6 +508,7 @@ public class GamePlay extends JFrame{
         panel4.add(panelRound11);
 
         panelRound12.setMaximumSize(new java.awt.Dimension(100, 100));
+        panelRound12.setPreferredSize(new java.awt.Dimension(100, 100));
         panelRound12.setRoundBottomLeft(15);
         panelRound12.setRoundBottomRight(15);
         panelRound12.setRoundTopLeft(15);
@@ -447,6 +522,7 @@ public class GamePlay extends JFrame{
         panel4.add(panelRound12);
 
         panelRound13.setMaximumSize(new java.awt.Dimension(100, 100));
+        panelRound13.setPreferredSize(new java.awt.Dimension(100, 100));
         panelRound13.setRoundBottomLeft(15);
         panelRound13.setRoundBottomRight(15);
         panelRound13.setRoundTopLeft(15);
@@ -460,6 +536,7 @@ public class GamePlay extends JFrame{
         panel4.add(panelRound13);
 
         panelRound14.setMaximumSize(new java.awt.Dimension(100, 100));
+        panelRound14.setPreferredSize(new java.awt.Dimension(100, 100));
         panelRound14.setRoundBottomLeft(15);
         panelRound14.setRoundBottomRight(15);
         panelRound14.setRoundTopLeft(15);
@@ -473,6 +550,7 @@ public class GamePlay extends JFrame{
         panel4.add(panelRound14);
 
         panelRound15.setMaximumSize(new java.awt.Dimension(100, 100));
+        panelRound15.setPreferredSize(new java.awt.Dimension(100, 100));
         panelRound15.setRoundBottomLeft(15);
         panelRound15.setRoundBottomRight(15);
         panelRound15.setRoundTopLeft(15);
@@ -487,6 +565,7 @@ public class GamePlay extends JFrame{
 
         panelRound16.setToolTipText("12");
         panelRound16.setMaximumSize(new java.awt.Dimension(100, 100));
+        panelRound16.setPreferredSize(new java.awt.Dimension(100, 100));
         panelRound16.setRoundBottomLeft(15);
         panelRound16.setRoundBottomRight(15);
         panelRound16.setRoundTopLeft(15);

@@ -1,6 +1,7 @@
 package View;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -9,10 +10,17 @@ import java.awt.Shape;
 import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
+import java.util.concurrent.TimeUnit;
 import javax.swing.JPanel;
+import org.jdesktop.core.animation.timing.Animator;
+import org.jdesktop.core.animation.timing.TimingSource;
+import org.jdesktop.core.animation.timing.interpolators.SplineInterpolator;
+import org.jdesktop.swing.animation.timing.sources.SwingTimerTimingSource;
 
 public class PanelRound extends JPanel {
     private int R_Color1, G_Color1, B_Color1, R_Color2, G_Color2, B_Color2;
+    private Animator animator;
+    
     public int getRoundTopLeft() {
         return roundTopLeft;
     }
@@ -66,6 +74,19 @@ public class PanelRound extends JPanel {
     public PanelRound() {
         setOpaque(false);
     }
+    
+//    public void addNewPanelAnimation(){
+//        if(animator != null && animator.isRunning()){
+//            animator.stop();
+//        }
+//        TimingSource timingSource = new SwingTimerTimingSource();
+//        animator = new Animator.Builder(timingSource)
+//                .setDuration(1000, TimeUnit.MILLISECONDS)
+//                .setInterpolator(new SplineInterpolator(0.4, 0.0, 0.2, 1.0))
+//                .addTarget(PropertySetter.getTarget())
+//    }
+    
+    
     
     @Override
     protected void paintComponent(Graphics grphcs) {
