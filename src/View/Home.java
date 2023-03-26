@@ -4,19 +4,68 @@
  */
 package View;
 
+import java.awt.Dimension;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
+import javax.swing.JPanel;
+
 /**
  *
  * @author LENOVO T480s
  */
 public class Home extends javax.swing.JFrame {
-
+    
     /**
      * Creates new form Home
      */
     public Home() {
         initComponents();
+        initUI();
     }
+    
+    void addImage(String pathName, JLabel label, String text){
+        BufferedImage img = null;
+        try {
+            img = ImageIO.read(new File(pathName));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Image dimg = img.getScaledInstance(label.getWidth(), label.getHeight(),Image.SCALE_SMOOTH);
+        ImageIcon imageIcon = new ImageIcon(dimg);
+        label.setIcon(imageIcon);
+        label.setText(text);
+    }
+    
+//    void addImagePanel(String pathName, JPanel panel){
+//        BufferedImage img = null;
+//        try {
+//            img = ImageIO.read(new File(pathName));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        Image dimg = img.getScaledInstance(panel.getWidth(), panel.getHeight(),Image.SCALE_SMOOTH);
+//        ImageIcon imageIcon = new ImageIcon(dimg);
+//        panel.setOpaque(false);
+//        panel.setContentPane(new JLabel(imageIcon));
+//    }
+    
+    void initUI(){
+        this.setSize(664, 550);
+        this.setLocationRelativeTo(null);
 
+        addImage("UI/Button_01.png", label2, "CONTINUE");
+        addImage("UI/Button_02.png", label3, "NEW GAME");
+        addImage("UI/Button_02.png", label4, "QUIT");
+//        addImagePanel("UI/Frame", panel3);
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -25,54 +74,79 @@ public class Home extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
-        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        panel3 = new javax.swing.JPanel();
+        label2 = new javax.swing.JLabel();
+        label3 = new javax.swing.JLabel();
+        label4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("2048");
+        jPanel2.setLayout(new java.awt.GridBagLayout());
 
-        jButton1.setText("jButton1");
+        jLabel1.setText("jLabel1");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 55;
+        gridBagConstraints.ipady = 25;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(41, 356, 18, 361);
+        jPanel2.add(jLabel1, gridBagConstraints);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(54, 54, 54)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addGap(49, 49, 49))
+        getContentPane().add(jPanel2, java.awt.BorderLayout.PAGE_START);
+
+        panel3.setMaximumSize(new java.awt.Dimension(800, 800));
+        panel3.setMinimumSize(new java.awt.Dimension(0, 0));
+        panel3.setPreferredSize(new java.awt.Dimension(180, 200));
+        panel3.setLayout(new java.awt.GridLayout(3, 0, 0, 10));
+
+        label2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/StartButtonTextless.png"))); // NOI18N
+        label2.setText("CONTINUE");
+        label2.setAlignmentY(0.0F);
+        label2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        label2.setOpaque(true);
+        panel3.add(label2);
+
+        label3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Button_02.png"))); // NOI18N
+        label3.setText("jLabel3");
+        label3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        label3.setMinimumSize(new java.awt.Dimension(0, 0));
+        label3.setPreferredSize(new java.awt.Dimension(180, 60));
+        panel3.add(label3);
+
+        label4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/UI/Button_02.png"))); // NOI18N
+        label4.setText("jLabel5");
+        label4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        label4.setMinimumSize(new java.awt.Dimension(0, 0));
+        label4.setPreferredSize(new java.awt.Dimension(180, 60));
+        panel3.add(label4);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(253, 253, 253)
+                .addComponent(panel3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(436, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(71, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(56, 56, 56)
-                .addComponent(jButton1)
-                .addGap(99, 99, 99))
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(73, 73, 73)
+                .addComponent(panel3, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(88, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(282, 282, 282)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(313, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(84, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(82, 82, 82))
-        );
+        getContentPane().add(jPanel3, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -113,8 +187,12 @@ public class Home extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JLabel label2;
+    private javax.swing.JLabel label3;
+    private javax.swing.JLabel label4;
+    private javax.swing.JPanel panel3;
     // End of variables declaration//GEN-END:variables
 }

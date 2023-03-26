@@ -7,6 +7,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Shape;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
@@ -19,6 +21,7 @@ import org.jdesktop.swing.animation.timing.sources.SwingTimerTimingSource;
 
 public class PanelRound extends JPanel {
     private int R_Color1, G_Color1, B_Color1, R_Color2, G_Color2, B_Color2;
+    
     private Animator animator;
     
     public int getRoundTopLeft() {
@@ -75,17 +78,19 @@ public class PanelRound extends JPanel {
         setOpaque(false);
     }
     
-//    public void addNewPanelAnimation(){
-//        if(animator != null && animator.isRunning()){
-//            animator.stop();
-//        }
-//        TimingSource timingSource = new SwingTimerTimingSource();
-//        animator = new Animator.Builder(timingSource)
-//                .setDuration(1000, TimeUnit.MILLISECONDS)
-//                .setInterpolator(new SplineInterpolator(0.4, 0.0, 0.2, 1.0))
-//                .addTarget(PropertySetter.getTarget())
+//    public void changeSizeFromCenter(){
+//        panel.addComponentListener(new ComponentAdapter(){
+//            @Override
+//            public void componentResized(ComponentEvent e) {
+//                int width = panel.getWidth()/2;
+//                int height = panel.getHeight()/2;
+//                int x = ;
+//                y = y - 200/2;
+//                panel.setBounds(x, y, 200, 200);
+//            }
+//            
+//        });
 //    }
-    
     
     
     @Override
@@ -151,4 +156,6 @@ public class PanelRound extends JPanel {
         area.add(new Area(new Rectangle2D.Double(0, 0, width, height - roundY / 2)));
         return area;
     }
+    
+    
 }

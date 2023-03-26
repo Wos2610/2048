@@ -2,6 +2,7 @@ package pkg2048;
 
 import Model.Matrix;
 import View.GamePlay;
+import View.Home;
 
 public class Main {
 
@@ -11,7 +12,7 @@ public class Main {
     public static void main(String[] args) {
         Matrix matrix = new Matrix();
         //matrix.output();
-        new GamePlay().setVisible(true);
+        new Home().setVisible(true);
     }
     
 }

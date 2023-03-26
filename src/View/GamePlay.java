@@ -3,6 +3,7 @@ package View;
 import Controller.Controller;
 import Model.Matrix;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -34,16 +35,12 @@ public class GamePlay extends JFrame{
         initUI();
         initBoard();
         renderBoard();
-        
+       //System.out.println(this.getWidth() + " " + this.getHeight());
     }
                 
     void initUI(){
-        this.setSize(650, 480);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        
-        //panelRound1.setColor(251, 96, 127, 253, 188, 180);
-        //panelRound2.setColor(251, 96, 127, 253, 188, 180);
     }
     
     
@@ -81,6 +78,14 @@ public class GamePlay extends JFrame{
         boardPanel.add(panelRound14);
         boardPanel.add(panelRound15);
         boardPanel.add(panelRound16);
+        
+        for(PanelRound i : boardPanel){
+            i.setPreferredSize(new Dimension(70, 70));
+            i.setMinimumSize(new Dimension(60, 60));
+            i.setMaximumSize(new Dimension(80, 80));
+        }
+        // Set size cua JFrame phu hop voi Component ben trong no
+        this.pack();
         
         panel4.addKeyListener(new KeyListener(){
             @Override
@@ -157,6 +162,7 @@ public class GamePlay extends JFrame{
                                     controller.setPreMatrix(preMatrix3);
                                     controller.addNewNumber();
                                     controller.addNewPanelAnimation(boardPanel.get(controller.getNewPanelIndex()));
+                                    //controller.returnPrePosition(boardPanel.get(controller.getNewPanelIndex()));
                                     controller.setIsMoved(false);
                                     renderBoard();
                                     controller.getMatrix().output();
@@ -220,7 +226,7 @@ public class GamePlay extends JFrame{
                     case 65536 -> boardPanel.get(index).setColor(71, 133, 194, 71, 133, 194);
                     default -> {
                         boardPanel.get(index).setColor(229, 228, 226, 213, 211, 209);
-                        //boardPanel.get(index).setOpaque(false);
+                        //boardPanel.get(index).setSize(65, 65);
                     }
                 }
                 if(value == 0){
@@ -284,6 +290,8 @@ public class GamePlay extends JFrame{
         label16 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(1000, 1000));
+        setResizable(false);
 
         homeButton.setText("Home");
         homeButton.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -337,6 +345,8 @@ public class GamePlay extends JFrame{
 
         getContentPane().add(panel1, java.awt.BorderLayout.PAGE_START);
 
+        panel2.setPreferredSize(new java.awt.Dimension(650, 100));
+
         javax.swing.GroupLayout panel2Layout = new javax.swing.GroupLayout(panel2);
         panel2.setLayout(panel2Layout);
         panel2Layout.setHorizontalGroup(
@@ -345,14 +355,21 @@ public class GamePlay extends JFrame{
         );
         panel2Layout.setVerticalGroup(
             panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 79, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         getContentPane().add(panel2, java.awt.BorderLayout.PAGE_END);
 
+        panel3.setMaximumSize(new java.awt.Dimension(1000, 1000));
+        panel3.setMinimumSize(new java.awt.Dimension(400, 400));
+        panel3.setPreferredSize(new java.awt.Dimension(650, 310));
+
+        panel4.setMaximumSize(new java.awt.Dimension(450, 450));
+        panel4.setMinimumSize(new java.awt.Dimension(400, 400));
         panel4.setLayout(new java.awt.GridLayout(4, 0, 10, 10));
 
         panelRound1.setMaximumSize(new java.awt.Dimension(100, 100));
+        panelRound1.setMinimumSize(new java.awt.Dimension(100, 100));
         panelRound1.setPreferredSize(new java.awt.Dimension(100, 100));
         panelRound1.setRoundBottomLeft(15);
         panelRound1.setRoundBottomRight(15);
@@ -362,11 +379,13 @@ public class GamePlay extends JFrame{
 
         label1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         label1.setText("jLabel2");
+        label1.setMaximumSize(new java.awt.Dimension(100, 100));
         panelRound1.add(label1, java.awt.BorderLayout.CENTER);
 
         panel4.add(panelRound1);
 
         panelRound2.setMaximumSize(new java.awt.Dimension(100, 100));
+        panelRound2.setMinimumSize(new java.awt.Dimension(100, 100));
         panelRound2.setPreferredSize(new java.awt.Dimension(100, 100));
         panelRound2.setRoundBottomLeft(15);
         panelRound2.setRoundBottomRight(15);
@@ -381,7 +400,7 @@ public class GamePlay extends JFrame{
         panel4.add(panelRound2);
 
         panelRound3.setMaximumSize(new java.awt.Dimension(100, 100));
-        panelRound3.setMinimumSize(new java.awt.Dimension(0, 0));
+        panelRound3.setMinimumSize(new java.awt.Dimension(100, 100));
         panelRound3.setPreferredSize(new java.awt.Dimension(100, 100));
         panelRound3.setRoundBottomLeft(15);
         panelRound3.setRoundBottomRight(15);
@@ -396,6 +415,7 @@ public class GamePlay extends JFrame{
         panel4.add(panelRound3);
 
         panelRound4.setMaximumSize(new java.awt.Dimension(100, 100));
+        panelRound4.setMinimumSize(new java.awt.Dimension(100, 100));
         panelRound4.setPreferredSize(new java.awt.Dimension(100, 100));
         panelRound4.setRoundBottomLeft(15);
         panelRound4.setRoundBottomRight(15);
@@ -410,6 +430,8 @@ public class GamePlay extends JFrame{
         panel4.add(panelRound4);
 
         panelRound5.setMaximumSize(new java.awt.Dimension(100, 100));
+        panelRound5.setMinimumSize(new java.awt.Dimension(100, 100));
+        panelRound5.setName(""); // NOI18N
         panelRound5.setPreferredSize(new java.awt.Dimension(100, 100));
         panelRound5.setRoundBottomLeft(15);
         panelRound5.setRoundBottomRight(15);
@@ -424,6 +446,7 @@ public class GamePlay extends JFrame{
         panel4.add(panelRound5);
 
         panelRound6.setMaximumSize(new java.awt.Dimension(100, 100));
+        panelRound6.setMinimumSize(new java.awt.Dimension(100, 100));
         panelRound6.setPreferredSize(new java.awt.Dimension(100, 100));
         panelRound6.setRoundBottomLeft(15);
         panelRound6.setRoundBottomRight(15);
@@ -438,6 +461,7 @@ public class GamePlay extends JFrame{
         panel4.add(panelRound6);
 
         panelRound7.setMaximumSize(new java.awt.Dimension(100, 100));
+        panelRound7.setMinimumSize(new java.awt.Dimension(100, 100));
         panelRound7.setPreferredSize(new java.awt.Dimension(100, 100));
         panelRound7.setRoundBottomLeft(15);
         panelRound7.setRoundBottomRight(15);
@@ -452,6 +476,7 @@ public class GamePlay extends JFrame{
         panel4.add(panelRound7);
 
         panelRound8.setMaximumSize(new java.awt.Dimension(100, 100));
+        panelRound8.setMinimumSize(new java.awt.Dimension(100, 100));
         panelRound8.setPreferredSize(new java.awt.Dimension(100, 100));
         panelRound8.setRoundBottomLeft(15);
         panelRound8.setRoundBottomRight(15);
@@ -466,6 +491,7 @@ public class GamePlay extends JFrame{
         panel4.add(panelRound8);
 
         panelRound9.setMaximumSize(new java.awt.Dimension(100, 100));
+        panelRound9.setMinimumSize(new java.awt.Dimension(100, 100));
         panelRound9.setPreferredSize(new java.awt.Dimension(100, 100));
         panelRound9.setRoundBottomLeft(15);
         panelRound9.setRoundBottomRight(15);
@@ -480,6 +506,7 @@ public class GamePlay extends JFrame{
         panel4.add(panelRound9);
 
         panelRound10.setMaximumSize(new java.awt.Dimension(100, 100));
+        panelRound10.setMinimumSize(new java.awt.Dimension(100, 100));
         panelRound10.setPreferredSize(new java.awt.Dimension(100, 100));
         panelRound10.setRoundBottomLeft(15);
         panelRound10.setRoundBottomRight(15);
@@ -494,6 +521,7 @@ public class GamePlay extends JFrame{
         panel4.add(panelRound10);
 
         panelRound11.setMaximumSize(new java.awt.Dimension(100, 100));
+        panelRound11.setMinimumSize(new java.awt.Dimension(100, 100));
         panelRound11.setPreferredSize(new java.awt.Dimension(100, 100));
         panelRound11.setRoundBottomLeft(15);
         panelRound11.setRoundBottomRight(15);
@@ -508,6 +536,7 @@ public class GamePlay extends JFrame{
         panel4.add(panelRound11);
 
         panelRound12.setMaximumSize(new java.awt.Dimension(100, 100));
+        panelRound12.setMinimumSize(new java.awt.Dimension(100, 100));
         panelRound12.setPreferredSize(new java.awt.Dimension(100, 100));
         panelRound12.setRoundBottomLeft(15);
         panelRound12.setRoundBottomRight(15);
@@ -522,6 +551,7 @@ public class GamePlay extends JFrame{
         panel4.add(panelRound12);
 
         panelRound13.setMaximumSize(new java.awt.Dimension(100, 100));
+        panelRound13.setMinimumSize(new java.awt.Dimension(100, 100));
         panelRound13.setPreferredSize(new java.awt.Dimension(100, 100));
         panelRound13.setRoundBottomLeft(15);
         panelRound13.setRoundBottomRight(15);
@@ -536,6 +566,7 @@ public class GamePlay extends JFrame{
         panel4.add(panelRound13);
 
         panelRound14.setMaximumSize(new java.awt.Dimension(100, 100));
+        panelRound14.setMinimumSize(new java.awt.Dimension(100, 100));
         panelRound14.setPreferredSize(new java.awt.Dimension(100, 100));
         panelRound14.setRoundBottomLeft(15);
         panelRound14.setRoundBottomRight(15);
@@ -550,6 +581,7 @@ public class GamePlay extends JFrame{
         panel4.add(panelRound14);
 
         panelRound15.setMaximumSize(new java.awt.Dimension(100, 100));
+        panelRound15.setMinimumSize(new java.awt.Dimension(100, 100));
         panelRound15.setPreferredSize(new java.awt.Dimension(100, 100));
         panelRound15.setRoundBottomLeft(15);
         panelRound15.setRoundBottomRight(15);
@@ -565,6 +597,7 @@ public class GamePlay extends JFrame{
 
         panelRound16.setToolTipText("12");
         panelRound16.setMaximumSize(new java.awt.Dimension(100, 100));
+        panelRound16.setMinimumSize(new java.awt.Dimension(100, 100));
         panelRound16.setPreferredSize(new java.awt.Dimension(100, 100));
         panelRound16.setRoundBottomLeft(15);
         panelRound16.setRoundBottomRight(15);
@@ -583,13 +616,13 @@ public class GamePlay extends JFrame{
         panel3Layout.setHorizontalGroup(
             panel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel3Layout.createSequentialGroup()
-                .addGap(198, 198, 198)
-                .addComponent(panel4, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(198, Short.MAX_VALUE))
+                .addGap(187, 187, 187)
+                .addComponent(panel4, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panel3Layout.setVerticalGroup(
             panel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel4, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
+            .addComponent(panel4, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         getContentPane().add(panel3, java.awt.BorderLayout.CENTER);

@@ -3,6 +3,10 @@ package Controller;
 import Model.Matrix;
 import View.PanelRound;
 import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
@@ -11,6 +15,7 @@ import javax.swing.JPanel;
 import org.jdesktop.core.animation.timing.Animator;
 import org.jdesktop.core.animation.timing.PropertySetter;
 import org.jdesktop.core.animation.timing.TimingSource;
+import org.jdesktop.core.animation.timing.TimingTargetAdapter;
 import org.jdesktop.core.animation.timing.interpolators.SplineInterpolator;
 import org.jdesktop.swing.animation.timing.sources.SwingTimerTimingSource;
 
@@ -22,6 +27,7 @@ public class Controller {
     private boolean isAdded = false;
     private Animator animator;
     private int newPanelIndex;
+    private Rectangle pre;
     
     private static Controller instance = null;
     
@@ -222,15 +228,30 @@ public class Controller {
         if(animator != null && animator.isRunning()){
             animator.stop();
         }
+        panel.addComponentListener(new ComponentAdapter(){
+            @Override
+            
+            public void componentResized(ComponentEvent e) {
+                int width = panel.getWidth();
+                int height = panel.getHeight();
+                int x = panel.getX() + panel.getWidth() / 2 - width / 2;
+                int y = panel.getY() + panel.getHeight() / 2 - height / 2;
+                panel.setBounds(x, y, width, height);
+            }
+            
+        });
+        
         TimingSource timingSource = new SwingTimerTimingSource();
         animator = new Animator.Builder(timingSource)
-                .setDuration(1000, TimeUnit.MILLISECONDS)
+                .setDuration(300, TimeUnit.MILLISECONDS)
                 .setInterpolator(new SplineInterpolator(0.4, 0.0, 0.2, 1.0))
-                .addTarget(PropertySetter.getTarget(panel, "size", new Dimension(0, 0), new Dimension(100, 100) ))
+                .addTarget(PropertySetter.getTarget(panel, "size", new Dimension(0, 0), new Dimension(70, 70) ))
                 .build();
         
         timingSource.init();
         animator.start();
+        
     }
+    
     
 }
