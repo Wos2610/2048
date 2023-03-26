@@ -1,6 +1,7 @@
 package View;
 
 import Controller.Controller;
+import Controller.IOBinary;
 import Model.Matrix;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -36,6 +37,17 @@ public class GamePlay extends JFrame{
         initBoard();
         renderBoard();
        //System.out.println(this.getWidth() + " " + this.getHeight());
+    }
+    
+    public GamePlay(Matrix matrix){
+        initComponents();
+        initUI();
+        initBoard();
+        Matrix preMatrix2 = new Matrix(matrix.getMatrixArray());
+        
+        controller.setPreMatrix(preMatrix2);
+        controller.setMatrix(matrix);
+        renderBoard();
     }
                 
     void initUI(){
@@ -649,6 +661,7 @@ public class GamePlay extends JFrame{
     }//GEN-LAST:event_restartButtonMouseClicked
 
     private void homeButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeButtonMouseClicked
+        IOBinary.writeMatrixToFile(controller.getMatrix(), "Matrix.txt");
         new Home().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_homeButtonMouseClicked

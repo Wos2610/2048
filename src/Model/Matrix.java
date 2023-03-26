@@ -1,9 +1,10 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Matrix {
+public class Matrix implements Serializable{
 
     private static int n = 4;
     private ArrayList<ArrayList<Integer>> matrix = new ArrayList<>(n + 1);

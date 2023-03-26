@@ -4,6 +4,9 @@
  */
 package View;
 
+import Controller.Controller;
+import Controller.IOBinary;
+import Model.Matrix;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -25,6 +28,7 @@ public class Home extends javax.swing.JFrame {
     /**
      * Creates new form Home
      */
+    private Controller controller = Controller.getInstance();
     public Home() {
         initComponents();
         initUI();
@@ -79,12 +83,12 @@ public class Home extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
+        pictureBox1 = new View.PictureBox();
+        pictureBox2 = new View.PictureBox();
         panel3 = new javax.swing.JPanel();
         label2 = new javax.swing.JLabel();
         label3 = new javax.swing.JLabel();
         label4 = new javax.swing.JLabel();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel2.setLayout(new java.awt.GridBagLayout());
 
@@ -98,7 +102,23 @@ public class Home extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(41, 356, 18, 361);
         jPanel2.add(jLabel1, gridBagConstraints);
 
-        getContentPane().add(jPanel2, java.awt.BorderLayout.PAGE_START);
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 809, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 301, Short.MAX_VALUE)
+        );
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
+
+        pictureBox1.setImage(new javax.swing.ImageIcon(getClass().getResource("/UI/Background.png"))); // NOI18N
+
+        pictureBox2.setImage(new javax.swing.ImageIcon(getClass().getResource("/UI/Frame.png"))); // NOI18N
 
         panel3.setMaximumSize(new java.awt.Dimension(800, 800));
         panel3.setMinimumSize(new java.awt.Dimension(0, 0));
@@ -111,6 +131,11 @@ public class Home extends javax.swing.JFrame {
         label2.setAlignmentY(0.0F);
         label2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         label2.setOpaque(true);
+        label2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                label2MouseClicked(evt);
+            }
+        });
         panel3.add(label2);
 
         label3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -119,6 +144,11 @@ public class Home extends javax.swing.JFrame {
         label3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         label3.setMinimumSize(new java.awt.Dimension(0, 0));
         label3.setPreferredSize(new java.awt.Dimension(180, 60));
+        label3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                label3MouseClicked(evt);
+            }
+        });
         panel3.add(label3);
 
         label4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -127,29 +157,65 @@ public class Home extends javax.swing.JFrame {
         label4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         label4.setMinimumSize(new java.awt.Dimension(0, 0));
         label4.setPreferredSize(new java.awt.Dimension(180, 60));
+        label4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                label4MouseClicked(evt);
+            }
+        });
         panel3.add(label4);
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(253, 253, 253)
-                .addComponent(panel3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(436, Short.MAX_VALUE))
+        pictureBox2.add(panel3);
+        panel3.setBounds(20, 40, 180, 200);
+
+        pictureBox1.setLayer(pictureBox2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout pictureBox1Layout = new javax.swing.GroupLayout(pictureBox1);
+        pictureBox1.setLayout(pictureBox1Layout);
+        pictureBox1Layout.setHorizontalGroup(
+            pictureBox1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pictureBox1Layout.createSequentialGroup()
+                .addGap(226, 226, 226)
+                .addComponent(pictureBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(435, Short.MAX_VALUE))
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(73, 73, 73)
-                .addComponent(panel3, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(88, Short.MAX_VALUE))
+        pictureBox1Layout.setVerticalGroup(
+            pictureBox1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pictureBox1Layout.createSequentialGroup()
+                .addContainerGap(111, Short.MAX_VALUE)
+                .addComponent(pictureBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(99, 99, 99))
         );
 
-        getContentPane().add(jPanel3, java.awt.BorderLayout.CENTER);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pictureBox1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(pictureBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void label2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label2MouseClicked
+
+        new GamePlay(controller.loadMatrixFromFile()).setVisible(true);
+    }//GEN-LAST:event_label2MouseClicked
+
+    private void label3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label3MouseClicked
+        new GamePlay().setVisible(true);
+    }//GEN-LAST:event_label3MouseClicked
+
+    private void label4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label4MouseClicked
+
+        System.exit(0);
+    }//GEN-LAST:event_label4MouseClicked
 
     /**
      * @param args the command line arguments
@@ -194,5 +260,7 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel label3;
     private javax.swing.JLabel label4;
     private javax.swing.JPanel panel3;
+    private View.PictureBox pictureBox1;
+    private View.PictureBox pictureBox2;
     // End of variables declaration//GEN-END:variables
 }

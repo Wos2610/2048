@@ -8,6 +8,7 @@ import java.awt.Rectangle;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
@@ -230,7 +231,6 @@ public class Controller {
         }
         panel.addComponentListener(new ComponentAdapter(){
             @Override
-            
             public void componentResized(ComponentEvent e) {
                 int width = panel.getWidth();
                 int height = panel.getHeight();
@@ -243,7 +243,7 @@ public class Controller {
         
         TimingSource timingSource = new SwingTimerTimingSource();
         animator = new Animator.Builder(timingSource)
-                .setDuration(300, TimeUnit.MILLISECONDS)
+                .setDuration(400, TimeUnit.MILLISECONDS)
                 .setInterpolator(new SplineInterpolator(0.4, 0.0, 0.2, 1.0))
                 .addTarget(PropertySetter.getTarget(panel, "size", new Dimension(0, 0), new Dimension(70, 70) ))
                 .build();
@@ -253,5 +253,8 @@ public class Controller {
         
     }
     
+    public Matrix loadMatrixFromFile(){
+        return IOBinary.readMatrixFromFile("Matrix.txt");
+    }
     
 }
