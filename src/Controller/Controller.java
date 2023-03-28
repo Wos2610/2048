@@ -1,17 +1,30 @@
 package Controller;
 
 import Model.Matrix;
+import View.Home;
 import View.PanelRound;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
+import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.util.*;
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import org.jdesktop.core.animation.timing.Animator;
 import org.jdesktop.core.animation.timing.PropertySetter;
@@ -29,6 +42,9 @@ public class Controller {
     private Animator animator;
     private int newPanelIndex;
     private Rectangle pre;
+    private int currentScore;
+    private int highestScore;
+    private Home homeState;
     
     private static Controller instance = null;
     
@@ -37,6 +53,10 @@ public class Controller {
             instance = new Controller();
         }
         return instance;
+    }
+    
+    public void renewMatrix(){
+        matrix = new Matrix();
     }
     
     public void addNewNumber(){
@@ -142,6 +162,7 @@ public class Controller {
                         if(Objects.equals(matrix.getValue(i, j), matrix.getValue(i, j + 1))){
                             isAdded = true;
                             matrix.setValue(i, j, 2 * matrix.getValue(i, j + 1));
+                            currentScore += 2 * matrix.getValue(i, j + 1);
                             matrix.setValue(i, j + 1, 0);
                         }
                     }
@@ -153,6 +174,7 @@ public class Controller {
                         if(Objects.equals(matrix.getValue(i, j), matrix.getValue(i, j - 1))){
                             isAdded = true;
                             matrix.setValue(i, j, 2 * matrix.getValue(i, j - 1));
+                            currentScore += 2 * matrix.getValue(i, j - 1);
                             matrix.setValue(i, j - 1, 0);
                         }
                     }
@@ -164,6 +186,7 @@ public class Controller {
                         if(Objects.equals(matrix.getValue(i, j), matrix.getValue(i + 1, j))){
                             isAdded = true;
                             matrix.setValue(i, j, 2 * matrix.getValue(i + 1, j));
+                            currentScore += 2 * matrix.getValue(i + 1, j);
                             matrix.setValue(i + 1, j, 0);
                         }
                     }
@@ -175,6 +198,7 @@ public class Controller {
                         if(Objects.equals(matrix.getValue(i, j), matrix.getValue(i - 1, j))){
                             isAdded = true;
                             matrix.setValue(i, j, 2 * matrix.getValue(i - 1, j));
+                            currentScore += 2 * matrix.getValue(i - 1, j);
                             matrix.setValue(i - 1, j, 0);
                         }
                     }
@@ -183,6 +207,9 @@ public class Controller {
             default -> {
             }
         } 
+        if(currentScore > highestScore){
+            highestScore = currentScore;
+        }
     }
 
     public Matrix getMatrix() {
@@ -225,6 +252,32 @@ public class Controller {
         this.newPanelIndex = newPanelIndex;
     }
 
+    public int getCurrentScore() {
+        return currentScore;
+    }
+
+    public void setCurrentScore(int currentScore) {
+        this.currentScore = currentScore;
+    }
+
+    public int getHighestScore() {
+        return highestScore;
+    }
+
+    public void setHighestScore(int highestScore) {
+        this.highestScore = highestScore;
+    }
+
+    public Home getHomeState() {
+        return homeState;
+    }
+
+    public void setHomeState(Home homeState) {
+        this.homeState = homeState;
+    }
+    
+    
+
     public void addNewPanelAnimation(PanelRound panel){
         if(animator != null && animator.isRunning()){
             animator.stop();
@@ -257,4 +310,74 @@ public class Controller {
         return IOBinary.readMatrixFromFile("Matrix.txt");
     }
     
+    public void addImage(String pathName, JLabel label, String text){
+        BufferedImage img = null;
+        try {
+            img = ImageIO.read(new File(pathName));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Image dimg = img.getScaledInstance(label.getWidth(), label.getHeight(),Image.SCALE_SMOOTH);
+        ImageIcon imageIcon = new ImageIcon(dimg);
+        label.setIcon(imageIcon);
+        label.setText(text);
+    }
+    
+    public void keyPressAnimation(JLabel label, KeyEvent e){
+        switch (e.getKeyCode()) {
+            case KeyEvent.VK_LEFT -> {
+                this.addImage("UI/white_arrow_left.png", label, "");
+            }
+            case KeyEvent.VK_RIGHT -> {
+                this.addImage("UI/white_arrow_right.png", label, "");
+            }
+            case KeyEvent.VK_UP -> {
+                this.addImage("UI/white_arrow_up.png", label, "");
+            }
+            case KeyEvent.VK_DOWN -> {
+               this.addImage("UI/white_arrow_down.png", label, "");
+            }
+            default -> {
+            }
+        } 
+    }
+    
+    public void readScoreFromFile(String pathName){
+        try {
+            FileReader reader = new FileReader("Score.txt");
+            BufferedReader bufferedReader = new BufferedReader(reader);
+ 
+            String line;
+            int index = 1;
+            while ((line = bufferedReader.readLine()) != null && index < 3) {
+                if(index == 1){
+                    currentScore = Integer.parseInt(line);
+                }
+                else{
+                    highestScore = Integer.parseInt(line);
+                }
+                index++;
+            }
+            reader.close();
+ 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void writeScoreToFile(String pathName, int currentScore, int highestScore){
+        try {
+            FileOutputStream outputStream = new FileOutputStream("Score.txt");
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream, "UTF-16");
+            BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
+             
+            bufferedWriter.write(String.valueOf(currentScore));
+            bufferedWriter.newLine();
+            bufferedWriter.write(String.valueOf(highestScore));
+             
+            bufferedWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

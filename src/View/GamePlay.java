@@ -32,7 +32,9 @@ public class GamePlay extends JFrame{
      * Creates new form GamePlay
      */
     public GamePlay() {
+        System.out.println(this.getWidth() + " " + this.getHeight());
         initComponents();
+        controller.renewMatrix();
         initUI();
         initBoard();
         renderBoard();
@@ -41,18 +43,26 @@ public class GamePlay extends JFrame{
     
     public GamePlay(Matrix matrix){
         initComponents();
+        Matrix preMatrix2 = new Matrix(matrix.getMatrixArray());
+        controller.setMatrix(preMatrix2);
         initUI();
         initBoard();
-        Matrix preMatrix2 = new Matrix(matrix.getMatrixArray());
-        
-        controller.setPreMatrix(preMatrix2);
-        controller.setMatrix(matrix);
         renderBoard();
     }
                 
     void initUI(){
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+        
+        controller.addImage("UI/black_arrow_left.png", leftLabel, "");
+        controller.addImage("UI/black_arrow_right.png", rightLabel, "");
+        controller.addImage("UI/black_arrow_up.png", topLabel, "");
+        controller.addImage("UI/black_arrow_down.png", bottomLabel, "");
+        //controller.addImage("UI/left2.png", leftLabel, "");
+        
+        controller.addImage("UI/homeButton.png", homeLabel, "");
+        controller.addImage("UI/undoButton.png", undoLabel, "");
+        controller.addImage("UI/restartButton.png", restartLabel, "");
     }
     
     
@@ -102,42 +112,6 @@ public class GamePlay extends JFrame{
         panel4.addKeyListener(new KeyListener(){
             @Override
             public void keyPressed(KeyEvent e) {
-//                Matrix preMatrix1 = new Matrix(controller.getMatrix().getMatrixArray());
-//                controller.setPreMatrix(preMatrix1);
-//                controller.moveNumber(e);
-//                Matrix preMatrix2 = new Matrix(controller.getMatrix().getMatrixArray());
-//                controller.setPreMatrix(preMatrix2);
-//                controller.sumOfValue(e);
-//                controller.moveNumber(e);
-//                renderBoard();
-
-//                int delay = 300; // Thời gian trễ là 1 giây
-//                Timer timer = new Timer(delay, new ActionListener() {
-//                    boolean isFirstTime = true;
-//
-//                    @Override
-//                    public void actionPerformed(ActionEvent e) {
-//                        if (isFirstTime == true) {
-//                            System.out.println("Delay");
-//                            isFirstTime = false;
-//                            if (controller.isIsMoved() == true || controller.isIsAdded() == true) {
-//                                Matrix preMatrix3 = new Matrix(controller.getMatrix().getMatrixArray());
-//                                controller.setPreMatrix(preMatrix3);
-//                                controller.addNewNumber();
-//                                controller.addNewPanelAnimation(boardPanel.get(controller.getNewPanelIndex()));
-//                                controller.setIsMoved(false);
-//                                renderBoard();
-//                                controller.getMatrix().output();
-//                            } else {
-//                                // hien thi thong bao
-//                            }
-//                        } else {
-//                            ((Timer) e.getSource()).stop();
-//                        }
-//                    }
-//                });
-//                timer.start(); // Bắt đầu thực hiện Timer
-
                 TimingSource timingSource = new SwingTimerTimingSource();
                 Animator animator1 = new Animator.Builder(timingSource)
                         .setDuration(1, TimeUnit.MILLISECONDS)
@@ -152,6 +126,23 @@ public class GamePlay extends JFrame{
                                 controller.sumOfValue(e);
                                 controller.moveNumber(e);
                                 renderBoard();
+                                
+                                switch (e.getKeyCode()) {
+                                    case KeyEvent.VK_LEFT -> {
+                                        controller.addImage("UI/white_arrow_left.png", leftLabel, "");
+                                    }
+                                    case KeyEvent.VK_RIGHT -> {
+                                        controller.addImage("UI/white_arrow_right.png", rightLabel, "");
+                                    }
+                                    case KeyEvent.VK_UP -> {
+                                        controller.addImage("UI/white_arrow_up.png", topLabel, "");
+                                    }
+                                    case KeyEvent.VK_DOWN -> {
+                                       controller.addImage("UI/white_arrow_down.png", bottomLabel, "");
+                                    }
+                                    default -> {
+                                    }
+                                } 
                             }
 
                     @Override
@@ -199,6 +190,22 @@ public class GamePlay extends JFrame{
             @Override
             public void keyReleased(KeyEvent e) {
                 System.out.println("Release");
+                switch (e.getKeyCode()) {
+                    case KeyEvent.VK_LEFT -> {
+                        controller.addImage("UI/black_arrow_left.png", leftLabel, "");
+                    }
+                    case KeyEvent.VK_RIGHT -> {
+                        controller.addImage("UI/black_arrow_right.png", rightLabel, "");
+                    }
+                    case KeyEvent.VK_UP -> {
+                        controller.addImage("UI/black_arrow_up.png", topLabel, "");
+                    }
+                    case KeyEvent.VK_DOWN -> {
+                        controller.addImage("UI/black_arrow_down.png", bottomLabel, "");
+                    }
+                    default -> {
+                    }
+                } 
             }
 
             @Override
@@ -262,10 +269,9 @@ public class GamePlay extends JFrame{
     private void initComponents() {
 
         panel1 = new javax.swing.JPanel();
-        homeButton = new javax.swing.JButton();
-        undoButton = new javax.swing.JButton();
-        restartButton = new javax.swing.JButton();
-        panel2 = new javax.swing.JPanel();
+        homeLabel = new javax.swing.JLabel();
+        undoLabel = new javax.swing.JLabel();
+        restartLabel = new javax.swing.JLabel();
         panel3 = new javax.swing.JPanel();
         panel4 = new javax.swing.JPanel();
         panelRound1 = new View.PanelRound();
@@ -300,34 +306,39 @@ public class GamePlay extends JFrame{
         label15 = new javax.swing.JLabel();
         panelRound16 = new View.PanelRound();
         label16 = new javax.swing.JLabel();
+        panel2 = new javax.swing.JPanel();
+        rightLabel = new javax.swing.JLabel();
+        leftLabel = new javax.swing.JLabel();
+        bottomLabel = new javax.swing.JLabel();
+        topLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1000, 1000));
+        setUndecorated(true);
+        setPreferredSize(new java.awt.Dimension(664, 550));
         setResizable(false);
 
-        homeButton.setText("Home");
-        homeButton.addMouseListener(new java.awt.event.MouseAdapter() {
+        homeLabel.setText("jLabel1");
+        homeLabel.setPreferredSize(new java.awt.Dimension(40, 40));
+        homeLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                homeButtonMouseClicked(evt);
+                homeLabelMouseClicked(evt);
             }
         });
 
-        undoButton.setText("Undo");
-        undoButton.addMouseListener(new java.awt.event.MouseAdapter() {
+        undoLabel.setText("jLabel2");
+        undoLabel.setPreferredSize(new java.awt.Dimension(40, 40));
+        undoLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                undoButtonMouseClicked(evt);
+                undoLabelMouseClicked(evt);
             }
         });
 
-        restartButton.setText("Restart");
-        restartButton.addMouseListener(new java.awt.event.MouseAdapter() {
+        restartLabel.setText("jLabel3");
+        restartLabel.setPreferredSize(new java.awt.Dimension(40, 40));
+        restartLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                restartButtonMouseClicked(evt);
-            }
-        });
-        restartButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                restartButtonActionPerformed(evt);
+                restartLabelMouseClicked(evt);
             }
         });
 
@@ -336,41 +347,26 @@ public class GamePlay extends JFrame{
         panel1Layout.setHorizontalGroup(
             panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel1Layout.createSequentialGroup()
-                .addContainerGap(371, Short.MAX_VALUE)
-                .addComponent(homeButton)
-                .addGap(18, 18, 18)
-                .addComponent(undoButton)
-                .addGap(18, 18, 18)
-                .addComponent(restartButton)
+                .addContainerGap(547, Short.MAX_VALUE)
+                .addComponent(homeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addComponent(undoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(restartLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27))
         );
         panel1Layout.setVerticalGroup(
             panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel1Layout.createSequentialGroup()
-                .addContainerGap(44, Short.MAX_VALUE)
+            .addGroup(panel1Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(homeButton)
-                    .addComponent(undoButton)
-                    .addComponent(restartButton))
-                .addGap(33, 33, 33))
+                    .addComponent(homeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(undoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(restartLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         getContentPane().add(panel1, java.awt.BorderLayout.PAGE_START);
-
-        panel2.setPreferredSize(new java.awt.Dimension(650, 100));
-
-        javax.swing.GroupLayout panel2Layout = new javax.swing.GroupLayout(panel2);
-        panel2.setLayout(panel2Layout);
-        panel2Layout.setHorizontalGroup(
-            panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 650, Short.MAX_VALUE)
-        );
-        panel2Layout.setVerticalGroup(
-            panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        getContentPane().add(panel2, java.awt.BorderLayout.PAGE_END);
 
         panel3.setMaximumSize(new java.awt.Dimension(1000, 1000));
         panel3.setMinimumSize(new java.awt.Dimension(400, 400));
@@ -623,6 +619,61 @@ public class GamePlay extends JFrame{
 
         panel4.add(panelRound16);
 
+        panel2.setPreferredSize(new java.awt.Dimension(40, 40));
+
+        rightLabel.setText("jLabel2");
+        rightLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                rightLabelMousePressed(evt);
+            }
+        });
+
+        leftLabel.setText("jLabel3");
+        leftLabel.setMaximumSize(new java.awt.Dimension(300, 300));
+        leftLabel.setPreferredSize(new java.awt.Dimension(40, 40));
+
+        bottomLabel.setText("jLabel4");
+        bottomLabel.setMaximumSize(new java.awt.Dimension(100, 100));
+        bottomLabel.setPreferredSize(new java.awt.Dimension(40, 40));
+
+        topLabel.setText("jLabel5");
+        topLabel.setMaximumSize(new java.awt.Dimension(100, 100));
+        topLabel.setPreferredSize(new java.awt.Dimension(40, 40));
+
+        javax.swing.GroupLayout panel2Layout = new javax.swing.GroupLayout(panel2);
+        panel2.setLayout(panel2Layout);
+        panel2Layout.setHorizontalGroup(
+            panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel2Layout.createSequentialGroup()
+                .addGap(254, 254, 254)
+                .addComponent(leftLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(bottomLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(topLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(rightLabel)
+                .addContainerGap(328, Short.MAX_VALUE))
+        );
+        panel2Layout.setVerticalGroup(
+            panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel2Layout.createSequentialGroup()
+                .addContainerGap(26, Short.MAX_VALUE)
+                .addComponent(topLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(bottomLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(56, 56, 56))
+            .addGroup(panel2Layout.createSequentialGroup()
+                .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panel2Layout.createSequentialGroup()
+                        .addGap(50, 50, 50)
+                        .addComponent(leftLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panel2Layout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addComponent(rightLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout panel3Layout = new javax.swing.GroupLayout(panel3);
         panel3.setLayout(panel3Layout);
         panel3Layout.setHorizontalGroup(
@@ -630,11 +681,19 @@ public class GamePlay extends JFrame{
             .addGroup(panel3Layout.createSequentialGroup()
                 .addGap(187, 187, 187)
                 .addComponent(panel4, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(250, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panel2, javax.swing.GroupLayout.DEFAULT_SIZE, 735, Short.MAX_VALUE)
+                .addContainerGap())
         );
         panel3Layout.setVerticalGroup(
             panel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel4, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(panel3Layout.createSequentialGroup()
+                .addComponent(panel4, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panel2, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         getContentPane().add(panel3, java.awt.BorderLayout.CENTER);
@@ -642,29 +701,31 @@ public class GamePlay extends JFrame{
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void restartButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restartButtonActionPerformed
+    private void rightLabelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rightLabelMousePressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_restartButtonActionPerformed
+    }//GEN-LAST:event_rightLabelMousePressed
 
-    private void undoButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_undoButtonMouseClicked
+    private void homeLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeLabelMouseClicked
+        System.out.println("Home");
+        IOBinary.writeMatrixToFile(controller.getMatrix(), "Matrix.txt");
+        new Home().setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_homeLabelMouseClicked
+
+    private void undoLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_undoLabelMouseClicked
         System.out.println("Undo");
         controller.setMatrix(controller.getPreMatrix());
         renderBoard();
         panel4.requestFocus();
-    }//GEN-LAST:event_undoButtonMouseClicked
+    }//GEN-LAST:event_undoLabelMouseClicked
 
-    private void restartButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_restartButtonMouseClicked
+    private void restartLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_restartLabelMouseClicked
         System.out.println("Restart");
+        controller.setCurrentScore(0);
         controller.setMatrix(new Matrix());
         renderBoard();
         panel4.requestFocus();
-    }//GEN-LAST:event_restartButtonMouseClicked
-
-    private void homeButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeButtonMouseClicked
-        IOBinary.writeMatrixToFile(controller.getMatrix(), "Matrix.txt");
-        new Home().setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_homeButtonMouseClicked
+    }//GEN-LAST:event_restartLabelMouseClicked
 
     /**
      * @param args the command line arguments
@@ -702,7 +763,8 @@ public class GamePlay extends JFrame{
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton homeButton;
+    private javax.swing.JLabel bottomLabel;
+    private javax.swing.JLabel homeLabel;
     private javax.swing.JLabel label1;
     private javax.swing.JLabel label10;
     private javax.swing.JLabel label11;
@@ -719,6 +781,7 @@ public class GamePlay extends JFrame{
     private javax.swing.JLabel label7;
     private javax.swing.JLabel label8;
     private javax.swing.JLabel label9;
+    private javax.swing.JLabel leftLabel;
     private javax.swing.JPanel panel1;
     private javax.swing.JPanel panel2;
     private javax.swing.JPanel panel3;
@@ -739,7 +802,9 @@ public class GamePlay extends JFrame{
     private View.PanelRound panelRound7;
     private View.PanelRound panelRound8;
     private View.PanelRound panelRound9;
-    private javax.swing.JButton restartButton;
-    private javax.swing.JButton undoButton;
+    private javax.swing.JLabel restartLabel;
+    private javax.swing.JLabel rightLabel;
+    private javax.swing.JLabel topLabel;
+    private javax.swing.JLabel undoLabel;
     // End of variables declaration//GEN-END:variables
 }

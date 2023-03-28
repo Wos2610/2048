@@ -1,7 +1,6 @@
 package pkg2048;
 
 import Model.Matrix;
-import View.GamePlay;
 import View.Home;
 
 public class Main {

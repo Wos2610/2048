@@ -34,41 +34,21 @@ public class Home extends javax.swing.JFrame {
         initUI();
     }
     
-    void addImage(String pathName, JLabel label, String text){
-        BufferedImage img = null;
-        try {
-            img = ImageIO.read(new File(pathName));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Image dimg = img.getScaledInstance(label.getWidth(), label.getHeight(),Image.SCALE_SMOOTH);
-        ImageIcon imageIcon = new ImageIcon(dimg);
-        label.setIcon(imageIcon);
-        label.setText(text);
-    }
-    
-//    void addImagePanel(String pathName, JPanel panel){
-//        BufferedImage img = null;
-//        try {
-//            img = ImageIO.read(new File(pathName));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        Image dimg = img.getScaledInstance(panel.getWidth(), panel.getHeight(),Image.SCALE_SMOOTH);
-//        ImageIcon imageIcon = new ImageIcon(dimg);
-//        panel.setOpaque(false);
-//        panel.setContentPane(new JLabel(imageIcon));
-//    }
-    
+     
+   
     void initUI(){
         this.setSize(664, 550);
         this.setLocationRelativeTo(null);
-
-        addImage("UI/Button_01.png", label2, "CONTINUE");
-        addImage("UI/Button_02.png", label3, "NEW GAME");
-        addImage("UI/Button_02.png", label4, "QUIT");
+        System.out.println(this.getWidth() + " " + this.getHeight());
+        controller.addImage("UI/Button_01.png", label2, "CONTINUE");
+        controller.addImage("UI/Button_02.png", label3, "NEW GAME");
+        controller.addImage("UI/Button_02.png", label4, "QUIT");
 //        addImagePanel("UI/Frame", panel3);
         
+    }
+    
+    void loadScore(){
+        controller.readScoreFromFile("Score.txt");
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -114,6 +94,7 @@ public class Home extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
         setResizable(false);
 
         pictureBox1.setImage(new javax.swing.ImageIcon(getClass().getResource("/UI/Background.png"))); // NOI18N
@@ -176,12 +157,12 @@ public class Home extends javax.swing.JFrame {
             .addGroup(pictureBox1Layout.createSequentialGroup()
                 .addGap(226, 226, 226)
                 .addComponent(pictureBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(435, Short.MAX_VALUE))
+                .addContainerGap(437, Short.MAX_VALUE))
         );
         pictureBox1Layout.setVerticalGroup(
             pictureBox1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pictureBox1Layout.createSequentialGroup()
-                .addContainerGap(111, Short.MAX_VALUE)
+                .addContainerGap(168, Short.MAX_VALUE)
                 .addComponent(pictureBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(99, 99, 99))
         );
@@ -194,9 +175,7 @@ public class Home extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(pictureBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(pictureBox1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -209,11 +188,13 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_label2MouseClicked
 
     private void label3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label3MouseClicked
+        
         new GamePlay().setVisible(true);
+        
     }//GEN-LAST:event_label3MouseClicked
 
     private void label4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label4MouseClicked
-
+        IOBinary.writeMatrixToFile(controller.getMatrix(), "Matrix.txt");
         System.exit(0);
     }//GEN-LAST:event_label4MouseClicked
 
