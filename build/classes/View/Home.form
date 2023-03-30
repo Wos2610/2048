@@ -81,13 +81,13 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="226" max="-2" attributes="0"/>
                   <Component id="pictureBox2" min="-2" pref="228" max="-2" attributes="0"/>
-                  <EmptySpace pref="437" max="32767" attributes="0"/>
+                  <EmptySpace pref="478" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
+              <Group type="102" attributes="0">
                   <EmptySpace pref="168" max="32767" attributes="0"/>
                   <Component id="pictureBox2" min="-2" pref="294" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="99" max="-2" attributes="0"/>

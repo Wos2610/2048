@@ -27,6 +27,9 @@ public class GamePlay extends JFrame{
     private ArrayList<PanelRound> boardPanel = new ArrayList<>();
     int n = controller.getMatrix().getN();
     private int newPanelIndex;
+    private int sec = 0;
+    private int min = 5;
+    private Timer timer;
     
     /**
      * Creates new form GamePlay
@@ -62,6 +65,7 @@ public class GamePlay extends JFrame{
         controller.addImage("UI/home (2).png", homeLabel, "");
         controller.addImage("UI/undoButton.png", undoLabel, "");
         controller.addImage("UI/restartButton.png", restartLabel, "");
+        
     }
     
     
@@ -313,6 +317,53 @@ public class GamePlay extends JFrame{
         Matrix preMatrix1 = new Matrix();
         controller.setPreMatrix(preMatrix1);
     }
+    
+    void renderCounterTime(){
+        minLabel.setText("0" + min);
+        secLabel.setText("0" + sec);
+        minLabel.setVisible(true);
+        secLabel.setVisible(true);
+        colonLabel.setVisible(true);
+        
+        timer = new Timer(1000, new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(sec == 0){
+                   sec = 60;
+                   min--;
+                }
+                if(min < 0){
+                    min = 0;
+                    sec = 0;
+                    timer.stop();
+                }
+                else{
+                    sec--;
+                    if(min < 10){
+                        minLabel.setText("0" + min);
+                    }
+                    else{
+                        minLabel.setText("" + min);
+                    }
+                    
+                    if(sec < 10){
+                        secLabel.setText("0" + sec);
+                    }
+                    else{
+                        secLabel.setText("" + sec);
+                    }
+                    
+                    if(min == 0 && sec <= 30){
+                        minLabel.setForeground(Color.RED);
+                        secLabel.setForeground(Color.RED);
+                        colonLabel.setForeground(Color.RED);
+                    }
+                }
+            }
+            
+        });
+        timer.start();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -326,6 +377,9 @@ public class GamePlay extends JFrame{
         homeLabel = new javax.swing.JLabel();
         undoLabel = new javax.swing.JLabel();
         restartLabel = new javax.swing.JLabel();
+        minLabel = new javax.swing.JLabel();
+        colonLabel = new javax.swing.JLabel();
+        secLabel = new javax.swing.JLabel();
         panel3 = new javax.swing.JPanel();
         panel4 = new javax.swing.JPanel();
         panelRound1 = new View.PanelRound();
@@ -396,12 +450,27 @@ public class GamePlay extends JFrame{
             }
         });
 
+        minLabel.setFont(new java.awt.Font("Segoe UI", 1, 30)); // NOI18N
+        minLabel.setText("00");
+
+        colonLabel.setFont(new java.awt.Font("Segoe UI", 1, 30)); // NOI18N
+        colonLabel.setText(":");
+
+        secLabel.setFont(new java.awt.Font("Segoe UI", 1, 30)); // NOI18N
+        secLabel.setText("00");
+
         javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
         panel1.setLayout(panel1Layout);
         panel1Layout.setHorizontalGroup(
             panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel1Layout.createSequentialGroup()
-                .addContainerGap(547, Short.MAX_VALUE)
+                .addGap(39, 39, 39)
+                .addComponent(minLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(colonLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(secLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 409, Short.MAX_VALUE)
                 .addComponent(homeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
                 .addComponent(undoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -416,7 +485,10 @@ public class GamePlay extends JFrame{
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(homeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(undoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(restartLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(restartLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(minLabel)
+                    .addComponent(colonLabel)
+                    .addComponent(secLabel))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
@@ -818,6 +890,7 @@ public class GamePlay extends JFrame{
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel bottomLabel;
+    private javax.swing.JLabel colonLabel;
     private javax.swing.JLabel homeLabel;
     private javax.swing.JLabel label1;
     private javax.swing.JLabel label10;
@@ -836,6 +909,7 @@ public class GamePlay extends JFrame{
     private javax.swing.JLabel label8;
     private javax.swing.JLabel label9;
     private javax.swing.JLabel leftLabel;
+    private javax.swing.JLabel minLabel;
     private javax.swing.JPanel panel1;
     private javax.swing.JPanel panel2;
     private javax.swing.JPanel panel3;
@@ -858,6 +932,7 @@ public class GamePlay extends JFrame{
     private View.PanelRound panelRound9;
     private javax.swing.JLabel restartLabel;
     private javax.swing.JLabel rightLabel;
+    private javax.swing.JLabel secLabel;
     private javax.swing.JLabel topLabel;
     private javax.swing.JLabel undoLabel;
     // End of variables declaration//GEN-END:variables

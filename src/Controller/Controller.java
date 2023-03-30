@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.Matrix;
+import View.ChooseLevel;
 import View.GamePlay;
 import View.Home;
 import View.PanelRound;
@@ -47,6 +48,8 @@ public class Controller {
     private int highestScore;
     private Home homeState;
     private GamePlay gamePlayState;
+    private ChooseLevel chooseLevelState;
+    int level;
     
     private static Controller instance = null;
     
@@ -290,6 +293,22 @@ public class Controller {
 
     public void setGamePlayState(GamePlay gamePlayState) {
         this.gamePlayState = gamePlayState;
+    }
+
+    public ChooseLevel getChooseLevelState() {
+        return chooseLevelState;
+    }
+
+    public void setChooseLevelState(ChooseLevel chooseLevelState) {
+        this.chooseLevelState = chooseLevelState;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
     }
     
     

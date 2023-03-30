@@ -17,6 +17,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -50,6 +51,7 @@ public class Home extends javax.swing.JFrame {
         controller.addImage("UI/Button_02.png", label3, "NEW GAME");
         controller.addImage("UI/Button_02.png", label4, "QUIT");
 //        addImagePanel("UI/Frame", panel3);
+
         
     }
     
@@ -160,11 +162,11 @@ public class Home extends javax.swing.JFrame {
             .addGroup(pictureBox1Layout.createSequentialGroup()
                 .addGap(226, 226, 226)
                 .addComponent(pictureBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(437, Short.MAX_VALUE))
+                .addContainerGap(478, Short.MAX_VALUE))
         );
         pictureBox1Layout.setVerticalGroup(
             pictureBox1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pictureBox1Layout.createSequentialGroup()
+            .addGroup(pictureBox1Layout.createSequentialGroup()
                 .addContainerGap(168, Short.MAX_VALUE)
                 .addComponent(pictureBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(99, 99, 99))
@@ -192,11 +194,8 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_label2MouseClicked
 
     private void label3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label3MouseClicked
-        controller.renewMatrix();
-        
-        controller.getGamePlayState().renderBoard();
-        controller.getGamePlayState().setVisible(true);
-        controller.getHomeState().setVisible(false);
+        controller.setChooseLevelState(new ChooseLevel());
+       
     }//GEN-LAST:event_label3MouseClicked
 
     private void label4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label4MouseClicked
