@@ -33,6 +33,7 @@ public class Matrix implements Serializable{
             int randValue = (randNum == 0) ? 2 : 4;
             matrix.get(randRow).set(randCol, randValue);
         }
+        
     }
 
     public void output() {

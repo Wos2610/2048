@@ -32,8 +32,14 @@ public class Home extends javax.swing.JFrame {
     public Home() {
         initComponents();
         initUI();
+        initState();
     }
     
+    void initState(){
+        controller.setHomeState(this);
+        controller.loadMatrixFromFile();
+        controller.setGamePlayState(new GamePlay());
+    }
      
    
     void initUI(){
@@ -47,9 +53,6 @@ public class Home extends javax.swing.JFrame {
         
     }
     
-    void loadScore(){
-        controller.readScoreFromFile("Score.txt");
-    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -183,14 +186,17 @@ public class Home extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void label2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label2MouseClicked
-
-        new GamePlay(controller.loadMatrixFromFile()).setVisible(true);
+        controller.loadMatrixFromFile();
+        controller.getGamePlayState().setVisible(true);
+        controller.getHomeState().setVisible(false);
     }//GEN-LAST:event_label2MouseClicked
 
     private void label3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label3MouseClicked
+        controller.renewMatrix();
         
-        new GamePlay().setVisible(true);
-        
+        controller.getGamePlayState().renderBoard();
+        controller.getGamePlayState().setVisible(true);
+        controller.getHomeState().setVisible(false);
     }//GEN-LAST:event_label3MouseClicked
 
     private void label4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label4MouseClicked

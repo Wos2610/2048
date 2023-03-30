@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.Matrix;
+import View.GamePlay;
 import View.Home;
 import View.PanelRound;
 import java.awt.Dimension;
@@ -45,6 +46,7 @@ public class Controller {
     private int currentScore;
     private int highestScore;
     private Home homeState;
+    private GamePlay gamePlayState;
     
     private static Controller instance = null;
     
@@ -57,6 +59,10 @@ public class Controller {
     
     public void renewMatrix(){
         matrix = new Matrix();
+    }
+    
+    public void loadGame(){
+        
     }
     
     public void addNewNumber(){
@@ -77,6 +83,7 @@ public class Controller {
     
     
     public void moveNumber(KeyEvent e){
+        isMoved = false;
         switch (e.getKeyCode()) {
             case KeyEvent.VK_LEFT -> {
                 for(int i = 1; i <= n; i++){
@@ -149,12 +156,12 @@ public class Controller {
             default -> {
             }
         }
-        System.out.println("After");
-        preMatrix.output();
+        System.out.println(isMoved);
     }
     
     public void sumOfValue(KeyEvent e){
         System.out.println("Sum");
+        isAdded = false;
         switch (e.getKeyCode()) {
             case KeyEvent.VK_LEFT -> {
                 for(int i = 1; i <= n; i++){
@@ -207,6 +214,7 @@ public class Controller {
             default -> {
             }
         } 
+        System.out.println(isAdded);
         if(currentScore > highestScore){
             highestScore = currentScore;
         }
@@ -275,6 +283,15 @@ public class Controller {
     public void setHomeState(Home homeState) {
         this.homeState = homeState;
     }
+
+    public GamePlay getGamePlayState() {
+        return gamePlayState;
+    }
+
+    public void setGamePlayState(GamePlay gamePlayState) {
+        this.gamePlayState = gamePlayState;
+    }
+    
     
     
 
@@ -306,8 +323,9 @@ public class Controller {
         
     }
     
-    public Matrix loadMatrixFromFile(){
-        return IOBinary.readMatrixFromFile("Matrix.txt");
+    public void loadMatrixFromFile(){
+        Matrix preMatrix2 = new Matrix(IOBinary.readMatrixFromFile("Matrix.txt").getMatrixArray());
+        setMatrix(preMatrix2);
     }
     
     public void addImage(String pathName, JLabel label, String text){

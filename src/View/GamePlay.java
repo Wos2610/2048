@@ -32,9 +32,8 @@ public class GamePlay extends JFrame{
      * Creates new form GamePlay
      */
     public GamePlay() {
-        System.out.println(this.getWidth() + " " + this.getHeight());
         initComponents();
-        controller.renewMatrix();
+        //controller.renewMatrix();
         initUI();
         initBoard();
         renderBoard();
@@ -60,7 +59,7 @@ public class GamePlay extends JFrame{
         controller.addImage("UI/black_arrow_down.png", bottomLabel, "");
         //controller.addImage("UI/left2.png", leftLabel, "");
         
-        controller.addImage("UI/homeButton.png", homeLabel, "");
+        controller.addImage("UI/home (2).png", homeLabel, "");
         controller.addImage("UI/undoButton.png", undoLabel, "");
         controller.addImage("UI/restartButton.png", restartLabel, "");
     }
@@ -172,6 +171,7 @@ public class GamePlay extends JFrame{
                                 } else {
                                     // hien thi thong bao
                                 }
+                                
                             }
 
                             @Override
@@ -181,10 +181,59 @@ public class GamePlay extends JFrame{
                         })
                         .build();
                 
+                
+//                Animator animator3 = new Animator.Builder(timingSource)
+//                        .setDuration(3000, TimeUnit.MILLISECONDS)
+//                        .addTarget(new TimingTargetAdapter(){
+//                            @Override
+//                            public void timingEvent(Animator source, double fraction) {
+//                                switch (e.getKeyCode()) {
+//                                    case KeyEvent.VK_LEFT -> {
+//                                        controller.addImage("UI/black_arrow_left.png", leftLabel, "");
+//                                    }
+//                                    case KeyEvent.VK_RIGHT -> {
+//                                        controller.addImage("UI/black_arrow_right.png", rightLabel, "");
+//                                    }
+//                                    case KeyEvent.VK_UP -> {
+//                                        controller.addImage("UI/black_arrow_up.png", topLabel, "");
+//                                    }
+//                                    case KeyEvent.VK_DOWN -> {
+//                                       controller.addImage("UI/black_arrow_down.png", bottomLabel, "");
+//                                    }
+//                                    default -> {
+//                                    }
+//                                } 
+//                            }
+//
+//                            @Override
+//                            public void end(Animator animator3) {
+//                                animator3.stop();
+//                            }  
+//                        })
+//                        .build();
+                        
                 timingSource.init();
                 animator1.start();
                 animator2.start();
                 
+                if(animator2.isRunning() == false && animator1.isRunning() == false){
+                    switch (e.getKeyCode()) {
+                        case KeyEvent.VK_LEFT -> {
+                            controller.addImage("UI/black_arrow_left.png", leftLabel, "");
+                        }
+                        case KeyEvent.VK_RIGHT -> {
+                            controller.addImage("UI/black_arrow_right.png", rightLabel, "");
+                        }
+                        case KeyEvent.VK_UP -> {
+                            controller.addImage("UI/black_arrow_up.png", topLabel, "");
+                        }
+                        case KeyEvent.VK_DOWN -> {
+                            controller.addImage("UI/black_arrow_down.png", bottomLabel, "");
+                        }
+                        default -> {
+                        }
+                    }
+                }
             }
 
             @Override
@@ -258,6 +307,11 @@ public class GamePlay extends JFrame{
                 index++;
             }
         }   
+    }
+    
+    void resetMatrix(){
+        Matrix preMatrix1 = new Matrix();
+        controller.setPreMatrix(preMatrix1);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -708,7 +762,7 @@ public class GamePlay extends JFrame{
     private void homeLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeLabelMouseClicked
         System.out.println("Home");
         IOBinary.writeMatrixToFile(controller.getMatrix(), "Matrix.txt");
-        new Home().setVisible(true);
+        controller.getHomeState().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_homeLabelMouseClicked
 
