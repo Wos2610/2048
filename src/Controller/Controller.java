@@ -49,7 +49,10 @@ public class Controller {
     private Home homeState;
     private GamePlay gamePlayState;
     private ChooseLevel chooseLevelState;
-    int level;
+    private int level;
+    private int secOfTimer;
+    private int minOfTimer;
+    
     
     private static Controller instance = null;
     
@@ -313,6 +316,8 @@ public class Controller {
     
     
     
+    
+    
 
     public void addNewPanelAnimation(PanelRound panel){
         if(animator != null && animator.isRunning()){
@@ -402,16 +407,67 @@ public class Controller {
         }
     }
     
-    public void writeScoreToFile(String pathName, int currentScore, int highestScore){
+    public void writeScoreToFile(){
         try {
             FileOutputStream outputStream = new FileOutputStream("Score.txt");
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream, "UTF-16");
             BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
              
-            bufferedWriter.write(String.valueOf(currentScore));
+            bufferedWriter.write(currentScore);
             bufferedWriter.newLine();
-            bufferedWriter.write(String.valueOf(highestScore));
+            bufferedWriter.write(highestScore);
+            
+            bufferedWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void readTimerFromFile(){
+        try {
+            FileReader reader = new FileReader("Time.txt");
+            BufferedReader bufferedReader = new BufferedReader(reader);
+ 
+            String i;
+            int index = 1;
+            while ((i = bufferedReader.readLine()) != null && index < 4) {
+                i.trim();
+                if(index == 1){
+                    level = Integer.parseInt(i);
+                    System.out.println("Level: " + level);
+                    if(level == 1){
+                        break;
+                    }
+                }
+                else if(index == 2){
+                    this.getGamePlayState().setMin(Integer.parseInt(i));
+                    System.out.println(i);
+                }
+                else{
+                    this.getGamePlayState().setSec(Integer.parseInt(i));
+                    System.out.println(i);
+                }
+                index++;
+            }
+            reader.close();
+ 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void writeTimerToFile(){
+        try {
+            FileOutputStream outputStream = new FileOutputStream("Time.txt");
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream, "UTF-8");
+            BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
              
+            bufferedWriter.write(Integer.toString(level));
+            bufferedWriter.newLine();
+            bufferedWriter.write(Integer.toString(this.getGamePlayState().getMin()));
+            bufferedWriter.newLine();
+            bufferedWriter.write(Integer.toString(this.getGamePlayState().getSec()));
+            
             bufferedWriter.close();
         } catch (IOException e) {
             e.printStackTrace();

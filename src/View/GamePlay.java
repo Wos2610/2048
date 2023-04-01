@@ -27,8 +27,8 @@ public class GamePlay extends JFrame{
     private ArrayList<PanelRound> boardPanel = new ArrayList<>();
     int n = controller.getMatrix().getN();
     private int newPanelIndex;
-    private int sec = 0;
-    private int min = 5;
+    private int sec;
+    private int min;
     private Timer timer;
     
     /**
@@ -62,9 +62,10 @@ public class GamePlay extends JFrame{
         controller.addImage("UI/black_arrow_down.png", bottomLabel, "");
         //controller.addImage("UI/left2.png", leftLabel, "");
         
-        controller.addImage("UI/home (2).png", homeLabel, "");
-        controller.addImage("UI/undoButton.png", undoLabel, "");
-        controller.addImage("UI/restartButton.png", restartLabel, "");
+        controller.addImage("UI/Icon_Home.png", homeLabel, "");
+        controller.addImage("UI/Icon_Left.png", undoLabel, "");
+        controller.addImage("UI/Icon_Repeat.png", restartLabel, "");
+        
         
     }
     
@@ -318,13 +319,59 @@ public class GamePlay extends JFrame{
         controller.setPreMatrix(preMatrix1);
     }
     
-    void renderCounterTime(){
-        minLabel.setText("0" + min);
-        secLabel.setText("0" + sec);
-        minLabel.setVisible(true);
-        secLabel.setVisible(true);
-        colonLabel.setVisible(true);
-        
+    void setDisplayCounterTime(boolean x){
+        minLabel.setVisible(x);
+        secLabel.setVisible(x);
+        colonLabel.setVisible(x);
+    }
+    
+    void setCounterTime(int min, int sec){
+        this.min = min;
+        this.sec = sec;
+    }
+    
+    Map.Entry<Integer, Integer> getCounterTime(){
+        Map.Entry<Integer, Integer> entry = new AbstractMap.SimpleEntry<>(min, sec);
+        return entry;
+    }
+    
+    Timer getTimer(){
+        return timer;
+    }
+
+    public int getSec() {
+        return sec;
+    }
+
+    public void setSec(int sec) {
+        this.sec = sec;
+    }
+
+    public int getMin() {
+        return min;
+    }
+
+    public void setMin(int min) {
+        this.min = min;
+    }
+    
+    
+    void setDefaultCounterTime(int m, int s){
+        this.sec = s;
+        this.min = m;
+        if(s < 10){
+            secLabel.setText("0" + sec);
+        }
+        else{
+            secLabel.setText("" + sec);
+        }
+        if(m < 10){
+            minLabel.setText("0" + min);
+        }
+        else{
+            minLabel.setText("" + min);
+        }
+
         timer = new Timer(1000, new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -359,9 +406,18 @@ public class GamePlay extends JFrame{
                         colonLabel.setForeground(Color.RED);
                     }
                 }
+                
             }
             
         });
+        
+    }
+    
+    
+    void renderCounterTime(){
+        System.out.println("render ");
+        System.out.println(min + " " + sec);
+        setDisplayCounterTime(true);
         timer.start();
     }
     /**
@@ -834,6 +890,11 @@ public class GamePlay extends JFrame{
     private void homeLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeLabelMouseClicked
         System.out.println("Home");
         IOBinary.writeMatrixToFile(controller.getMatrix(), "Matrix.txt");
+        if(controller.getLevel() == 2){
+            controller.writeTimerToFile();
+            timer.stop();
+        }
+        
         controller.getHomeState().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_homeLabelMouseClicked
@@ -847,6 +908,7 @@ public class GamePlay extends JFrame{
 
     private void restartLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_restartLabelMouseClicked
         System.out.println("Restart");
+        this.setCounterTime(5, 0);
         controller.setCurrentScore(0);
         controller.setMatrix(new Matrix());
         renderBoard();

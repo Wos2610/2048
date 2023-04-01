@@ -188,18 +188,30 @@ public class Home extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void label2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label2MouseClicked
+
         controller.loadMatrixFromFile();
+        controller.readTimerFromFile();
+        if(controller.getLevel() == 2){
+            controller.getGamePlayState().setDefaultCounterTime(controller.getGamePlayState().getMin(), controller.getGamePlayState().getSec());
+            controller.getGamePlayState().getTimer().restart();
+            //controller.getGamePlayState().renderCounterTime();
+        }
+        else{
+            controller.getGamePlayState().setDisplayCounterTime(false);
+        }
         controller.getGamePlayState().setVisible(true);
         controller.getHomeState().setVisible(false);
     }//GEN-LAST:event_label2MouseClicked
 
     private void label3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label3MouseClicked
-        controller.setChooseLevelState(new ChooseLevel());
-       
+        ChooseLevel chooseLevel = new ChooseLevel();
+        chooseLevel.setVisible(true);
+        controller.setChooseLevelState(chooseLevel);
     }//GEN-LAST:event_label3MouseClicked
 
     private void label4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label4MouseClicked
         IOBinary.writeMatrixToFile(controller.getMatrix(), "Matrix.txt");
+        controller.writeTimerToFile();
         System.exit(0);
     }//GEN-LAST:event_label4MouseClicked
 
