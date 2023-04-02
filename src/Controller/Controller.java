@@ -4,6 +4,7 @@ import Model.Matrix;
 import View.ChooseLevel;
 import View.GamePlay;
 import View.Home;
+import View.IntroState;
 import View.PanelRound;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -52,6 +53,7 @@ public class Controller {
     private Home homeState;
     private GamePlay gamePlayState;
     private ChooseLevel chooseLevelState;
+    private IntroState introState;
     private int level;
     private int secOfTimer;
     private int minOfTimer;
@@ -308,6 +310,16 @@ public class Controller {
     public void setChooseLevelState(ChooseLevel chooseLevelState) {
         this.chooseLevelState = chooseLevelState;
     }
+
+    public IntroState getIntroState() {
+        return introState;
+    }
+
+    public void setIntroState(IntroState introState) {
+        this.introState = introState;
+    }
+    
+    
 
     public int getLevel() {
         return level;
