@@ -7,6 +7,7 @@ package View;
 import Controller.Controller;
 import Controller.IOBinary;
 import Model.Matrix;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -52,7 +53,12 @@ public class Home extends javax.swing.JFrame {
         controller.addImage("UI/Button_02.png", label4, "QUIT");
 //        addImagePanel("UI/Frame", panel3);
 
-        
+        controller.setFont("gothicb", label2, 26);
+        label2.setForeground(new Color(217,242,246));
+        controller.setFont("gothicb", label3, 26);
+        label3.setForeground(new Color(217,242,246));
+        controller.setFont("gothicb", label4, 26);
+        label4.setForeground(new Color(217,242,246));
     }
     
     /**
@@ -191,6 +197,8 @@ public class Home extends javax.swing.JFrame {
 
         controller.loadMatrixFromFile();
         controller.readTimerFromFile();
+        controller.readScoreFromFile("Score");
+        controller.getGamePlayState().renderScore();
         if(controller.getLevel() == 2){
             controller.getGamePlayState().setDefaultCounterTime(controller.getGamePlayState().getMin(), controller.getGamePlayState().getSec());
             controller.getGamePlayState().getTimer().restart();

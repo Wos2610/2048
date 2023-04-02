@@ -130,6 +130,7 @@ public class ChooseLevel extends javax.swing.JFrame {
     }//GEN-LAST:event_label2MouseClicked
 
     private void label3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label3MouseClicked
+        controller.setCurrentScore(0);
         int choice = controller.getLevel();
         switch (choice) {
             case 1 -> {

@@ -6,6 +6,9 @@ import View.GamePlay;
 import View.Home;
 import View.PanelRound;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -386,7 +389,7 @@ public class Controller {
     
     public void readScoreFromFile(String pathName){
         try {
-            FileReader reader = new FileReader("Score.txt");
+            FileReader reader = new FileReader(pathName + ".txt");
             BufferedReader bufferedReader = new BufferedReader(reader);
  
             String line;
@@ -407,15 +410,15 @@ public class Controller {
         }
     }
     
-    public void writeScoreToFile(){
+    public void writeScoreToFile(String pathName){
         try {
-            FileOutputStream outputStream = new FileOutputStream("Score.txt");
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream, "UTF-16");
+            FileOutputStream outputStream = new FileOutputStream(pathName + ".txt");
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream, "UTF-8");
             BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
              
-            bufferedWriter.write(currentScore);
+            bufferedWriter.write(Integer.toString(currentScore));
             bufferedWriter.newLine();
-            bufferedWriter.write(highestScore);
+            bufferedWriter.write(Integer.toString(highestScore));
             
             bufferedWriter.close();
         } catch (IOException e) {
@@ -434,18 +437,18 @@ public class Controller {
                 i.trim();
                 if(index == 1){
                     level = Integer.parseInt(i);
-                    System.out.println("Level: " + level);
+                    
                     if(level == 1){
                         break;
                     }
                 }
                 else if(index == 2){
                     this.getGamePlayState().setMin(Integer.parseInt(i));
-                    System.out.println(i);
+                    
                 }
                 else{
                     this.getGamePlayState().setSec(Integer.parseInt(i));
-                    System.out.println(i);
+                    
                 }
                 index++;
             }
@@ -472,5 +475,24 @@ public class Controller {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    
+    public void setFont(String pathname, JLabel label, float size){
+        // tạo một đối tượng Font trống
+        Font customFont = null;
+
+        try {
+            // load font từ file
+            customFont = Font.createFont(Font.TRUETYPE_FONT, new File("UI/" + pathname + ".ttf")).deriveFont(12f);
+            // đăng ký font với GraphicsEnvironment
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(customFont);
+        } catch (IOException | FontFormatException e) {
+            e.printStackTrace();
+        }
+
+        // sử dụng font
+        
+        label.setFont(customFont.deriveFont(size));
     }
 }
