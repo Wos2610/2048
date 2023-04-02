@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
+import javax.swing.WindowConstants;
 
 /**
  *
@@ -19,12 +20,17 @@ import javax.swing.UIManager;
 public class ChooseLevel extends javax.swing.JFrame {
 
     private Controller controller = Controller.getInstance();
+    private int choice = 0;
+    private boolean isChoosed = false;
     /**
      * Creates new form ChooseLevel
      */
     public ChooseLevel() {
+        //this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE); 
+        this.setTitle("Choose level");
         initComponents();
         initUI();
+        choice = controller.getLevel();
     }
 
     void initUI(){
@@ -32,7 +38,7 @@ public class ChooseLevel extends javax.swing.JFrame {
         System.out.println(label2.getWidth() + " " + label2.getHeight());
         controller.addImage("UI/infinity2.png", label1, "");
         controller.addImage("UI/clock2.png", label2, "");
-        controller.addImage("UI/Ok.png", label3, "");
+        controller.addImage("UI/OK1.png", label3, "");
         
     }
     
@@ -55,6 +61,7 @@ public class ChooseLevel extends javax.swing.JFrame {
         label1 = new javax.swing.JLabel();
         label2 = new javax.swing.JLabel();
         label3 = new javax.swing.JLabel();
+        textLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(320, 250));
@@ -66,15 +73,26 @@ public class ChooseLevel extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 label1MouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                label1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                label1MouseExited(evt);
+            }
         });
 
         label2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         label2.setMaximumSize(new java.awt.Dimension(180, 276));
-        label2.setMinimumSize(new java.awt.Dimension(0, 0));
         label2.setPreferredSize(new java.awt.Dimension(45, 70));
         label2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 label2MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                label2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                label2MouseExited(evt);
             }
         });
 
@@ -84,22 +102,34 @@ public class ChooseLevel extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 label3MouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                label3MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                label3MouseExited(evt);
+            }
         });
+
+        textLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        textLabel.setPreferredSize(new java.awt.Dimension(205, 16));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(55, 55, 55)
-                .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
-                .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(61, 61, 61))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(115, 115, 115))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(55, 55, 55)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(textLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(61, 61, 61))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -108,7 +138,9 @@ public class ChooseLevel extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(53, 53, 53)
+                .addGap(25, 25, 25)
+                .addComponent(textLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(label3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(54, Short.MAX_VALUE))
         );
@@ -118,12 +150,16 @@ public class ChooseLevel extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void label1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label1MouseClicked
+       isChoosed = true;
+       textLabel.setText("");
        controller.addImage("UI/infinity1.png", label1, "");
        controller.addImage("UI/clock2.png", label2, "");
        controller.setLevel(1);
     }//GEN-LAST:event_label1MouseClicked
 
     private void label2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label2MouseClicked
+       isChoosed = true;
+       textLabel.setText("");
        controller.addImage("UI/infinity2.png", label1, "");
        controller.addImage("UI/clock1.png", label2, "");
        controller.setLevel(2);
@@ -131,7 +167,16 @@ public class ChooseLevel extends javax.swing.JFrame {
 
     private void label3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label3MouseClicked
         controller.setCurrentScore(0);
-        int choice = controller.getLevel();
+        controller.setIsFirst2048(1);
+        choice = controller.getLevel();
+        if(isChoosed == false){
+            textLabel.setVisible(true);
+            textLabel.setText("You haven't selected the level");
+        }
+        else{
+            textLabel.setVisible(false);
+            isChoosed = false;
+        }
         switch (choice) {
             case 1 -> {
                 controller.getGamePlayState().setDisplayCounterTime(false);
@@ -146,6 +191,56 @@ public class ChooseLevel extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_label3MouseClicked
+
+    private void label3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label3MouseEntered
+        controller.addImage("UI/Ok.png", label3, "");
+    }//GEN-LAST:event_label3MouseEntered
+
+    private void label3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label3MouseExited
+        controller.addImage("UI/OK1.png", label3, "");
+    }//GEN-LAST:event_label3MouseExited
+
+    private void label1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label1MouseEntered
+
+        if(controller.getLevel() == 1){
+            controller.addImage("UI/infinity1.png", label1, "");
+        }
+        else{
+            controller.addImage("UI/infinity3.png", label1, "");
+        }
+        
+    }//GEN-LAST:event_label1MouseEntered
+
+    private void label1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label1MouseExited
+        if(controller.getLevel() == 1){
+            controller.addImage("UI/infinity1.png", label1, "");
+        }
+        else{
+            controller.addImage("UI/infinity2.png", label1, "");
+        }
+        
+
+    }//GEN-LAST:event_label1MouseExited
+
+    private void label2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label2MouseEntered
+        if(controller.getLevel() == 2){
+            controller.addImage("UI/clock1.png", label2, "");
+        }
+        else{
+            controller.addImage("UI/clock3.png", label2, "");
+        }
+        
+    }//GEN-LAST:event_label2MouseEntered
+
+    private void label2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label2MouseExited
+        if(controller.getLevel() == 2){
+            controller.addImage("UI/clock1.png", label2, "");
+        }
+        else{
+            controller.addImage("UI/clock2.png", label2, "");
+        }
+        
+    }//GEN-LAST:event_label2MouseExited
 
     /**
      * @param args the command line arguments
@@ -186,5 +281,6 @@ public class ChooseLevel extends javax.swing.JFrame {
     private javax.swing.JLabel label1;
     private javax.swing.JLabel label2;
     private javax.swing.JLabel label3;
+    private javax.swing.JLabel textLabel;
     // End of variables declaration//GEN-END:variables
 }

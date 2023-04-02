@@ -41,6 +41,7 @@ public class Home extends javax.swing.JFrame {
         controller.setHomeState(this);
         controller.loadMatrixFromFile();
         controller.setGamePlayState(new GamePlay());
+        controller.setMessageState(new Message());
     }
      
    
@@ -48,7 +49,7 @@ public class Home extends javax.swing.JFrame {
         this.setSize(664, 550);
         this.setLocationRelativeTo(null);
         System.out.println(this.getWidth() + " " + this.getHeight());
-        controller.addImage("UI/Button_01.png", label2, "CONTINUE");
+        controller.addImage("UI/Button_02.png", label2, "CONTINUE");
         controller.addImage("UI/Button_02.png", label3, "NEW GAME");
         controller.addImage("UI/Button_02.png", label4, "QUIT");
 //        addImagePanel("UI/Frame", panel3);
@@ -127,6 +128,12 @@ public class Home extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 label2MouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                label2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                label2MouseExited(evt);
+            }
         });
         panel3.add(label2);
 
@@ -140,6 +147,12 @@ public class Home extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 label3MouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                label3MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                label3MouseExited(evt);
+            }
         });
         panel3.add(label3);
 
@@ -152,6 +165,12 @@ public class Home extends javax.swing.JFrame {
         label4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 label4MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                label4MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                label4MouseExited(evt);
             }
         });
         panel3.add(label4);
@@ -222,6 +241,30 @@ public class Home extends javax.swing.JFrame {
         controller.writeTimerToFile();
         System.exit(0);
     }//GEN-LAST:event_label4MouseClicked
+
+    private void label2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label2MouseEntered
+        controller.addImage("UI/Button_01.png", label2, "CONTINUE");
+    }//GEN-LAST:event_label2MouseEntered
+
+    private void label2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label2MouseExited
+        controller.addImage("UI/Button_02.png", label2, "CONTINUE");
+    }//GEN-LAST:event_label2MouseExited
+
+    private void label3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label3MouseEntered
+        controller.addImage("UI/Button_01.png", label3, "NEW GAME");
+    }//GEN-LAST:event_label3MouseEntered
+
+    private void label3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label3MouseExited
+        controller.addImage("UI/Button_02.png", label3, "NEW GAME");
+    }//GEN-LAST:event_label3MouseExited
+
+    private void label4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label4MouseEntered
+        controller.addImage("UI/Button_01.png", label4, "QUIT");
+    }//GEN-LAST:event_label4MouseEntered
+
+    private void label4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label4MouseExited
+        controller.addImage("UI/Button_02.png", label4, "QUIT");
+    }//GEN-LAST:event_label4MouseExited
 
     /**
      * @param args the command line arguments

@@ -29,6 +29,7 @@ public class GamePlay extends JFrame{
     private int newPanelIndex;
     private int sec;
     private int min;
+    private int isContinue = 1;
     private Timer timer;
     
     /**
@@ -289,15 +290,27 @@ public class GamePlay extends JFrame{
     
     void renderBoard(){
         controller.getMatrix().output();
+        if(controller.isIsAdded() == false && controller.isIsMoved() == false && isContinue == 0){
+            controller.getMessageState().setIsWin(0);
+            controller.getMessageState().setMessageLabel("Lato-Black", "You Lose");
+            controller.getMessageState().setGuideLabel("Lato-Regular","Click OK to continue");
+            controller.getMessageState().setVisible(true);
+            
+        }
         int index = 0;
         //int value = 1;
         renderScore();
+        isContinue = 0;
         for(int i = 1; i <= n; i++){
             for(int j = 1; j <= n; j++){
                 //value *= 2;
                 int value = controller.getMatrix().getValue(i, j);
                 //boardPanel.get(index).setOpaque(true);
                 switch (value) {
+                    case 0 -> {
+                        isContinue = 1;
+                        boardPanel.get(index).setColor(229, 228, 226, 213, 211, 209);
+                    }
                     case 2 -> boardPanel.get(index).setColor(255, 215, 226, 255, 215, 226);
                     case 4 -> boardPanel.get(index).setColor(253, 175, 191, 253, 175, 191);
                     case 8 -> boardPanel.get(index).setColor(252, 130, 154, 252, 130, 154);
@@ -308,7 +321,15 @@ public class GamePlay extends JFrame{
                     case 256 -> boardPanel.get(index).setColor(217, 193, 222, 217, 193, 225);
                     case 512 -> boardPanel.get(index).setColor(206, 176, 213, 206, 176, 213);
                     case 1024 -> boardPanel.get(index).setColor(189, 149, 199, 189, 149, 199);
-                    case 2048 -> boardPanel.get(index).setColor(169, 116, 182,169, 116, 182);
+                    case 2048 -> {
+                        boardPanel.get(index).setColor(169, 116, 182,169, 116, 182);
+                        if(controller.isIsFirst2048() == 1){
+                            controller.getMessageState().setIsWin(1);
+                            controller.getMessageState().setMessageLabel("Lato-Black", "You Win");
+                            controller.getMessageState().setGuideLabel("Lato-Regular","Click OK to continue");
+                            controller.getMessageState().setVisible(true);
+                        }
+                    }
                     case 4096 -> boardPanel.get(index).setColor(200, 219, 237, 200, 219, 237);
                     case 8192 -> boardPanel.get(index).setColor(168, 197, 226, 168, 197, 226);
                     case 16384 -> boardPanel.get(index).setColor(135, 175, 215,135, 175, 215);
@@ -620,10 +641,10 @@ public class GamePlay extends JFrame{
         panelRound17Layout.setVerticalGroup(
             panelRound17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRound17Layout.createSequentialGroup()
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(2, 2, 2)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
                 .addComponent(highestScoreLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
@@ -665,15 +686,14 @@ public class GamePlay extends JFrame{
                         .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(restartLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(undoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(homeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(10, 10, 10))
+                            .addComponent(homeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(panel1Layout.createSequentialGroup()
                         .addGap(21, 21, 21)
                         .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(minLabel)
                             .addComponent(colonLabel)
-                            .addComponent(secLabel))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(secLabel))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         getContentPane().add(panel1, java.awt.BorderLayout.PAGE_START);
@@ -998,20 +1018,19 @@ public class GamePlay extends JFrame{
         panel2Layout.setVerticalGroup(
             panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel2Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(topLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(bottomLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(56, 56, 56))
-            .addGroup(panel2Layout.createSequentialGroup()
                 .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panel2Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(topLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(bottomLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panel2Layout.createSequentialGroup()
                         .addGap(50, 50, 50)
                         .addComponent(leftLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panel2Layout.createSequentialGroup()
                         .addGap(46, 46, 46)
                         .addComponent(rightLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(78, Short.MAX_VALUE))
+                .addContainerGap(62, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout panel3Layout = new javax.swing.GroupLayout(panel3);

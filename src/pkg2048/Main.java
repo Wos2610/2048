@@ -3,6 +3,7 @@ package pkg2048;
 import Model.Matrix;
 import View.Home;
 import View.IntroState;
+import View.Message;
 
 public class Main {
 
@@ -12,7 +13,8 @@ public class Main {
     public static void main(String[] args) {
         Matrix matrix = new Matrix();
         //matrix.output();
-        new IntroState().setVisible(true);
+        //new Message().setVisible(true);
+        new Home().setVisible(true);
     }
     
 }

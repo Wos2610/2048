@@ -5,6 +5,7 @@ import View.ChooseLevel;
 import View.GamePlay;
 import View.Home;
 import View.IntroState;
+import View.Message;
 import View.PanelRound;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -54,9 +55,11 @@ public class Controller {
     private GamePlay gamePlayState;
     private ChooseLevel chooseLevelState;
     private IntroState introState;
+    private Message messageState;
     private int level;
     private int secOfTimer;
     private int minOfTimer;
+    private int isFirst2048;
     
     
     private static Controller instance = null;
@@ -318,9 +321,15 @@ public class Controller {
     public void setIntroState(IntroState introState) {
         this.introState = introState;
     }
-    
-    
 
+    public Message getMessageState() {
+        return messageState;
+    }
+
+    public void setMessageState(Message messageState) {
+        this.messageState = messageState;
+    }
+    
     public int getLevel() {
         return level;
     }
@@ -328,10 +337,14 @@ public class Controller {
     public void setLevel(int level) {
         this.level = level;
     }
-    
-    
-    
-    
+
+    public int isIsFirst2048() {
+        return isFirst2048;
+    }
+
+    public void setIsFirst2048(int isFirst2048) {
+        this.isFirst2048 = isFirst2048;
+    }
     
 
     public void addNewPanelAnimation(PanelRound panel){
@@ -406,12 +419,11 @@ public class Controller {
  
             String line;
             int index = 1;
-            while ((line = bufferedReader.readLine()) != null && index < 3) {
-                if(index == 1){
-                    currentScore = Integer.parseInt(line);
-                }
-                else{
-                    highestScore = Integer.parseInt(line);
+            while ((line = bufferedReader.readLine()) != null && index < 4) {
+                switch (index) {
+                    case 1 -> currentScore = Integer.parseInt(line);
+                    case 2 -> highestScore = Integer.parseInt(line);
+                    case 3 -> isFirst2048 = Integer.parseInt(line);
                 }
                 index++;
             }
@@ -431,6 +443,8 @@ public class Controller {
             bufferedWriter.write(Integer.toString(currentScore));
             bufferedWriter.newLine();
             bufferedWriter.write(Integer.toString(highestScore));
+            bufferedWriter.newLine();
+            bufferedWriter.write(Integer.toString(isFirst2048));
             
             bufferedWriter.close();
         } catch (IOException e) {
