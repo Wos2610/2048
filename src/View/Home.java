@@ -43,8 +43,6 @@ public class Home extends javax.swing.JFrame {
         controller.addImage("UI/Button_02.png", label4, "QUIT");
 //        addImagePanel("UI/Frame", panel3);
         controller.addImage("UI/cute.png", titleLabel, "");
-        controller.setFont("VastShadow-Regular", titleLabel, 100);
-        titleLabel.setForeground(new Color(238,122,170));
         titleLabel.setText("");
         controller.setFont("gothicb", label2, 26);
         label2.setForeground(new Color(217,242,246));
