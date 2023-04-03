@@ -6,7 +6,6 @@ package View;
 
 import Controller.Controller;
 import javax.swing.JLabel;
-import javax.swing.WindowConstants;
 
 /**
  *
@@ -97,7 +96,7 @@ public class Message extends javax.swing.JFrame {
         imageLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(400, 200));
+        setResizable(false);
 
         messageLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         messageLabel.setText("jLabel1");
@@ -108,6 +107,12 @@ public class Message extends javax.swing.JFrame {
         buttonLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 buttonLabelMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                buttonLabelMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                buttonLabelMouseExited(evt);
             }
         });
 
@@ -164,6 +169,14 @@ public class Message extends javax.swing.JFrame {
             loseButtonLabel();
         }
     }//GEN-LAST:event_buttonLabelMouseClicked
+
+    private void buttonLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonLabelMouseEntered
+        controller.addImage("UI/OK.png", buttonLabel, "");
+    }//GEN-LAST:event_buttonLabelMouseEntered
+
+    private void buttonLabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonLabelMouseExited
+        controller.addImage("UI/OK1.png", buttonLabel, "");
+    }//GEN-LAST:event_buttonLabelMouseExited
 
     /**
      * @param args the command line arguments

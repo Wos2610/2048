@@ -4,15 +4,12 @@ import Controller.Controller;
 import Controller.IOBinary;
 import Model.Matrix;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import javax.swing.JLabel;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.Timer;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
-import javax.swing.JFrame;
+import javax.swing.*;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import org.jdesktop.core.animation.timing.Animator;
@@ -294,8 +291,8 @@ public class GamePlay extends JFrame{
             controller.getMessageState().setIsWin(0);
             controller.getMessageState().setMessageLabel("Lato-Black", "You Lose");
             controller.getMessageState().setGuideLabel("Lato-Regular","Click OK to continue");
+            controller.getMessageState().setImageLabel("UI/lose.png");
             controller.getMessageState().setVisible(true);
-            
         }
         int index = 0;
         //int value = 1;

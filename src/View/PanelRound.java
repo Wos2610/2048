@@ -1,17 +1,8 @@
 package View;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GradientPaint;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.Shape;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.geom.Area;
-import java.awt.geom.Rectangle2D;
-import java.awt.geom.RoundRectangle2D;
+import java.awt.*;
+import java.awt.event.*;
+import java.awt.geom.*;
 import java.util.concurrent.TimeUnit;
 import javax.swing.JPanel;
 import org.jdesktop.core.animation.timing.Animator;

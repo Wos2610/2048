@@ -7,19 +7,11 @@ package View;
 import Controller.Controller;
 import Controller.IOBinary;
 import Model.Matrix;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 /**
  *
@@ -42,6 +34,7 @@ public class Home extends javax.swing.JFrame {
         controller.loadMatrixFromFile();
         controller.setGamePlayState(new GamePlay());
         controller.setMessageState(new Message());
+        controller.setChooseLevelState(new ChooseLevel());
     }
      
    
@@ -231,9 +224,7 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_label2MouseClicked
 
     private void label3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label3MouseClicked
-        ChooseLevel chooseLevel = new ChooseLevel();
-        chooseLevel.setVisible(true);
-        controller.setChooseLevelState(chooseLevel);
+        controller.getChooseLevelState().setVisible(true);
     }//GEN-LAST:event_label3MouseClicked
 
     private void label4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label4MouseClicked
