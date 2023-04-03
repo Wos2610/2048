@@ -1,4 +1,5 @@
 package pkg2048;
+import View.Home;
 import View.IntroState;
 
 public class Main {
@@ -9,7 +10,7 @@ public class Main {
     public static void main(String[] args) {
         //Matrix matrix = new Matrix();
         //matrix.output();
-        new IntroState().setVisible(true);
+        new Home().setVisible(true);
     }
     
 }

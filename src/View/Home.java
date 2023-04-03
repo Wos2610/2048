@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package View;
 
 import Controller.Controller;
@@ -46,7 +42,10 @@ public class Home extends javax.swing.JFrame {
         controller.addImage("UI/Button_02.png", label3, "NEW GAME");
         controller.addImage("UI/Button_02.png", label4, "QUIT");
 //        addImagePanel("UI/Frame", panel3);
-
+        controller.addImage("UI/cute.png", titleLabel, "");
+        controller.setFont("VastShadow-Regular", titleLabel, 100);
+        titleLabel.setForeground(new Color(238,122,170));
+        titleLabel.setText("");
         controller.setFont("gothicb", label2, 26);
         label2.setForeground(new Color(217,242,246));
         controller.setFont("gothicb", label3, 26);
@@ -74,6 +73,7 @@ public class Home extends javax.swing.JFrame {
         label2 = new javax.swing.JLabel();
         label3 = new javax.swing.JLabel();
         label4 = new javax.swing.JLabel();
+        titleLabel = new javax.swing.JLabel();
 
         jPanel2.setLayout(new java.awt.GridBagLayout());
 
@@ -102,7 +102,7 @@ public class Home extends javax.swing.JFrame {
         setUndecorated(true);
         setResizable(false);
 
-        pictureBox1.setImage(new javax.swing.ImageIcon(getClass().getResource("/UI/Background.png"))); // NOI18N
+        pictureBox1.setImage(new javax.swing.ImageIcon(getClass().getResource("/UI/Background1.png"))); // NOI18N
 
         pictureBox2.setImage(new javax.swing.ImageIcon(getClass().getResource("/UI/Frame.png"))); // NOI18N
 
@@ -171,34 +171,47 @@ public class Home extends javax.swing.JFrame {
         pictureBox2.add(panel3);
         panel3.setBounds(20, 40, 180, 200);
 
+        titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titleLabel.setText("jLabel2");
+        titleLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        titleLabel.setPreferredSize(new java.awt.Dimension(400, 100));
+
         pictureBox1.setLayer(pictureBox2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        pictureBox1.setLayer(titleLabel, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout pictureBox1Layout = new javax.swing.GroupLayout(pictureBox1);
         pictureBox1.setLayout(pictureBox1Layout);
         pictureBox1Layout.setHorizontalGroup(
             pictureBox1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pictureBox1Layout.createSequentialGroup()
-                .addGap(226, 226, 226)
-                .addComponent(pictureBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(478, Short.MAX_VALUE))
+                .addGroup(pictureBox1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pictureBox1Layout.createSequentialGroup()
+                        .addGap(226, 226, 226)
+                        .addComponent(pictureBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pictureBox1Layout.createSequentialGroup()
+                        .addGap(143, 143, 143)
+                        .addComponent(titleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(121, Short.MAX_VALUE))
         );
         pictureBox1Layout.setVerticalGroup(
             pictureBox1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pictureBox1Layout.createSequentialGroup()
-                .addContainerGap(168, Short.MAX_VALUE)
+                .addContainerGap(84, Short.MAX_VALUE)
+                .addComponent(titleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(pictureBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(99, 99, 99))
+                .addGap(60, 60, 60))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pictureBox1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pictureBox1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pictureBox1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pictureBox1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -302,5 +315,6 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JPanel panel3;
     private View.PictureBox pictureBox1;
     private View.PictureBox pictureBox2;
+    private javax.swing.JLabel titleLabel;
     // End of variables declaration//GEN-END:variables
 }
