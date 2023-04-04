@@ -30,6 +30,28 @@ public class GamePlay extends JFrame{
     private int min;
     private int isContinue = 1;
     private Timer timer;
+    private int[][] colors = {
+        {229, 228, 226, 213, 211, 209}, // color for value 0
+        {255, 215, 226, 255, 215, 226}, // color for value 2
+        {253, 175, 191, 253, 175, 191}, // color for value 4
+        {252, 130, 154, 252, 130, 154}, // color for value 8
+        {245, 173, 173, 245, 173, 173}, // color for value 16
+        {241, 132, 132, 241, 132, 132}, // color for value 32
+        {237, 104, 104, 237, 104, 104}, // color for value 64
+        {228, 211, 232, 228, 211, 232}, // color for value 128
+        {217, 193, 222, 217, 193, 225}, // color for value 256
+        {206, 176, 213, 206, 176, 213}, // color for value 512
+        {189, 149, 199, 189, 149, 199}, // color for value 1024
+        {169, 116, 182,169, 116, 182}, // color for value 2048
+        {200, 219, 237, 200, 219, 237}, // color for value 4096
+        {168, 197, 226, 168, 197, 226}, // color for value 8192
+        {135, 175, 215,135, 175, 215}, // color for value 16384
+        {96, 125, 139, 96, 125, 139},  // color for value 32768
+        {204, 204, 204,204, 204, 204} // color cho scoreLabel
+        
+    };
+    
+
     
     /**
      * Creates new form GamePlay
@@ -75,8 +97,8 @@ public class GamePlay extends JFrame{
         resourceManager.loadFont("RobotoMono-Medium", highestScoreLabel, 22);
         highestScoreLabel.setForeground(Color.WHITE);
         
-        panelRound17.setColor(204, 204, 204,204, 204, 204);
-        panelRound18.setColor(204, 204, 204,204, 204, 204);
+        panelRound17.setColor(colors[16]);
+        panelRound18.setColor(colors[16]);
         
     }
     
@@ -250,23 +272,6 @@ public class GamePlay extends JFrame{
             @Override
             public void keyReleased(KeyEvent e) {
                 System.out.println("Release");
-                
-//                switch (e.getKeyCode()) {
-//                    case KeyEvent.VK_LEFT -> {
-//                        resourceManager.loadImage("black_arrow_left", leftLabel, "");
-//                    }
-//                    case KeyEvent.VK_RIGHT -> {
-//                        resourceManager.loadImage("black_arrow_right", rightLabel, "");
-//                    }
-//                    case KeyEvent.VK_UP -> {
-//                        resourceManager.loadImage("black_arrow_up", topLabel, "");
-//                    }
-//                    case KeyEvent.VK_DOWN -> {
-//                        resourceManager.loadImage("black_arrow_down", bottomLabel, "");
-//                    }
-//                    default -> {
-//                    }
-//                } 
             }
 
             @Override
@@ -294,57 +299,80 @@ public class GamePlay extends JFrame{
         //int value = 1;
         renderScore();
         isContinue = 0;
-        for(int i = 1; i <= n; i++){
-            for(int j = 1; j <= n; j++){
-                //value *= 2;
+        
+        
+//        for(int i = 1; i <= n; i++){
+//            for(int j = 1; j <= n; j++){
+//                //value *= 2;
+//                int value = controller.getMatrix().getValue(i, j);
+//                //boardPanel.get(index).setOpaque(true);
+//                switch (value) {
+//                    case 0 -> {
+//                        isContinue = 1;
+//                        boardPanel.get(index).setColor(229, 228, 226, 213, 211, 209);
+//                    }
+//                    case 2 -> boardPanel.get(index).setColor(255, 215, 226, 255, 215, 226);
+//                    case 4 -> boardPanel.get(index).setColor(253, 175, 191, 253, 175, 191);
+//                    case 8 -> boardPanel.get(index).setColor(252, 130, 154, 252, 130, 154);
+//                    case 16 -> boardPanel.get(index).setColor(245, 173, 173, 245, 173, 173);
+//                    case 32 -> boardPanel.get(index).setColor(241, 132, 132, 241, 132, 132);
+//                    case 64 -> boardPanel.get(index).setColor(237, 104, 104, 237, 104, 104);
+//                    case 128-> boardPanel.get(index).setColor(228, 211, 232, 228, 211, 232);
+//                    case 256 -> boardPanel.get(index).setColor(217, 193, 222, 217, 193, 225);
+//                    case 512 -> boardPanel.get(index).setColor(206, 176, 213, 206, 176, 213);
+//                    case 1024 -> boardPanel.get(index).setColor(189, 149, 199, 189, 149, 199);
+//                    case 2048 -> {
+//                        boardPanel.get(index).setColor(169, 116, 182,169, 116, 182);
+//                        if(controller.isIsFirst2048() == 1){
+//                            controller.getMessageState().setIsWin(1);
+//                            controller.getMessageState().setMessageLabel("Lato-Black", "You Win");
+//                            controller.getMessageState().setGuideLabel("Lato-Regular","Click OK to continue");
+//                            controller.getMessageState().setVisible(true);
+//                        }
+//                    }
+//                    case 4096 -> boardPanel.get(index).setColor(200, 219, 237, 200, 219, 237);
+//                    case 8192 -> boardPanel.get(index).setColor(168, 197, 226, 168, 197, 226);
+//                    case 16384 -> boardPanel.get(index).setColor(135, 175, 215,135, 175, 215);
+//                    case 32768 -> boardPanel.get(index).setColor(96, 149, 202, 96, 149, 202);
+//                    case 65536 -> boardPanel.get(index).setColor(71, 133, 194, 71, 133, 194);
+//                    default -> {
+//                        boardPanel.get(index).setColor(229, 228, 226, 213, 211, 209);
+//                        //boardPanel.get(index).setSize(65, 65);
+//                    }
+//                }
+//                if(value == 0){
+//                    boardLabel.get(index).setVisible(false);
+//                }
+//                else{
+//                    boardLabel.get(index).setVisible(true);
+//                }
+//                boardLabel.get(index).setText(String.valueOf(value));
+//                index++;
+//            }
+//        }   
+           
+          for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= n; j++) {
                 int value = controller.getMatrix().getValue(i, j);
-                //boardPanel.get(index).setOpaque(true);
-                switch (value) {
-                    case 0 -> {
-                        isContinue = 1;
-                        boardPanel.get(index).setColor(229, 228, 226, 213, 211, 209);
-                    }
-                    case 2 -> boardPanel.get(index).setColor(255, 215, 226, 255, 215, 226);
-                    case 4 -> boardPanel.get(index).setColor(253, 175, 191, 253, 175, 191);
-                    case 8 -> boardPanel.get(index).setColor(252, 130, 154, 252, 130, 154);
-                    case 16 -> boardPanel.get(index).setColor(245, 173, 173, 245, 173, 173);
-                    case 32 -> boardPanel.get(index).setColor(241, 132, 132, 241, 132, 132);
-                    case 64 -> boardPanel.get(index).setColor(237, 104, 104, 237, 104, 104);
-                    case 128-> boardPanel.get(index).setColor(228, 211, 232, 228, 211, 232);
-                    case 256 -> boardPanel.get(index).setColor(217, 193, 222, 217, 193, 225);
-                    case 512 -> boardPanel.get(index).setColor(206, 176, 213, 206, 176, 213);
-                    case 1024 -> boardPanel.get(index).setColor(189, 149, 199, 189, 149, 199);
-                    case 2048 -> {
-                        boardPanel.get(index).setColor(169, 116, 182,169, 116, 182);
-                        if(controller.isIsFirst2048() == 1){
-                            controller.getMessageState().setIsWin(1);
-                            controller.getMessageState().setMessageLabel("Lato-Black", "You Win");
-                            controller.getMessageState().setGuideLabel("Lato-Regular","Click OK to continue");
-                            controller.getMessageState().setVisible(true);
-                        }
-                    }
-                    case 4096 -> boardPanel.get(index).setColor(200, 219, 237, 200, 219, 237);
-                    case 8192 -> boardPanel.get(index).setColor(168, 197, 226, 168, 197, 226);
-                    case 16384 -> boardPanel.get(index).setColor(135, 175, 215,135, 175, 215);
-                    case 32768 -> boardPanel.get(index).setColor(96, 149, 202, 96, 149, 202);
-                    case 65536 -> boardPanel.get(index).setColor(71, 133, 194, 71, 133, 194);
-                    default -> {
-                        boardPanel.get(index).setColor(229, 228, 226, 213, 211, 209);
-                        //boardPanel.get(index).setSize(65, 65);
-                    }
-                }
-                if(value == 0){
+                if (value == 0) {
+                    isContinue = 1;
+                    boardPanel.get(index).setColor(colors[0]);
                     boardLabel.get(index).setVisible(false);
-                }
-                else{
+                } else {
+                    boardPanel.get(index).setColor(colors[(int)(Math.log(value) / Math.log(2))]);
+                    if (value == 2048 && controller.isIsFirst2048() == 1) {
+                        controller.getMessageState().setIsWin(1);
+                        controller.getMessageState().setMessageLabel("Lato-Black", "You Win");
+                        controller.getMessageState().setGuideLabel("Lato-Regular", "Click OK to continue");
+                        controller.getMessageState().setVisible(true);
+                    }
                     boardLabel.get(index).setVisible(true);
                 }
                 boardLabel.get(index).setText(String.valueOf(value));
                 index++;
             }
-        }   
+          }
     }
-    
     void renderScore(){
         currentScoreLabel.setText(Integer.toString(controller.getCurrentScore()));
         highestScoreLabel.setText(Integer.toString(controller.getHighestScore()));

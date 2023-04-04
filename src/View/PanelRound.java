@@ -1,14 +1,9 @@
 package View;
 
 import java.awt.*;
-import java.awt.event.*;
 import java.awt.geom.*;
-import java.util.concurrent.TimeUnit;
 import javax.swing.JPanel;
 import org.jdesktop.core.animation.timing.Animator;
-import org.jdesktop.core.animation.timing.TimingSource;
-import org.jdesktop.core.animation.timing.interpolators.SplineInterpolator;
-import org.jdesktop.swing.animation.timing.sources.SwingTimerTimingSource;
 
 public class PanelRound extends JPanel {
     private int R_Color1, G_Color1, B_Color1, R_Color2, G_Color2, B_Color2;
@@ -51,13 +46,13 @@ public class PanelRound extends JPanel {
         repaint();
     }
     
-    void setColor(int R1, int G1, int B1, int R2, int G2, int B2){
-        R_Color1 = R1;
-        G_Color1 = G1;
-        B_Color1 = B1;
-        R_Color2 = R2;
-        G_Color2 = G2;
-        B_Color2 = B2;
+    void setColor(int[] color){
+        R_Color1 = color[0];
+        G_Color1 = color[1];
+        B_Color1 = color[2];
+        R_Color2 = color[3];
+        G_Color2 = color[4];
+        B_Color2 = color[5];
     }
     
     private int roundTopLeft = 0;

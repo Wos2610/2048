@@ -17,6 +17,7 @@ public class Matrix implements Serializable{
     }
 
     public Matrix() {
+        
         for (int i = 0; i <= n + 1; i++) {
             ArrayList<Integer> row = new ArrayList<>(n + 1);
             for (int j = 0; j <= n + 1; j++) {
