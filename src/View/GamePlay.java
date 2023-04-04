@@ -242,7 +242,7 @@ public class GamePlay extends JFrame{
                         }
                     }
                 }
-                System.out.println(animator1.isRunning() + " " + animator2.isRunning());
+                
             }
 
             @Override
