@@ -71,8 +71,8 @@ public class Controller {
             int randRow = ThreadLocalRandom.current().nextInt(1, n + 1);
             int randCol = ThreadLocalRandom.current().nextInt(1, n + 1);
             if(matrix.getValue(randRow, randCol) == 0){
-                int randNum = ThreadLocalRandom.current().nextInt(2);
-                int randValue = (randNum == 0) ? 2 : 4;
+                int randNum = ThreadLocalRandom.current().nextInt(5);
+                int randValue = (randNum == 0) ? 4 : 2;
                 matrix.setValue(randRow, randCol, randValue);
                 // Index của Panel : 0 -> 15
                 newPanelIndex = (randRow - 1) * 4 + randCol - 1;
