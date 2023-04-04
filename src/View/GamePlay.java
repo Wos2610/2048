@@ -173,7 +173,7 @@ public class GamePlay extends JFrame{
                         .build();
                 
                 Animator animator2 = new Animator.Builder(timingSource)
-                        .setDuration(10, TimeUnit.MILLISECONDS)
+                        .setDuration(5, TimeUnit.MILLISECONDS)
                         .addTarget(new TimingTargetAdapter(){
                             @Override
                             public void timingEvent(Animator source, double fraction) {
@@ -201,36 +201,7 @@ public class GamePlay extends JFrame{
                         .build();
                 
                 
-//                Animator animator3 = new Animator.Builder(timingSource)
-//                        .setDuration(3000, TimeUnit.MILLISECONDS)
-//                        .addTarget(new TimingTargetAdapter(){
-//                            @Override
-//                            public void timingEvent(Animator source, double fraction) {
-//                                switch (e.getKeyCode()) {
-//                                    case KeyEvent.VK_LEFT -> {
-//                                        controller.addImage("UI/black_arrow_left.png", leftLabel, "");
-//                                    }
-//                                    case KeyEvent.VK_RIGHT -> {
-//                                        controller.addImage("UI/black_arrow_right.png", rightLabel, "");
-//                                    }
-//                                    case KeyEvent.VK_UP -> {
-//                                        controller.addImage("UI/black_arrow_up.png", topLabel, "");
-//                                    }
-//                                    case KeyEvent.VK_DOWN -> {
-//                                       controller.addImage("UI/black_arrow_down.png", bottomLabel, "");
-//                                    }
-//                                    default -> {
-//                                    }
-//                                } 
-//                            }
-//
-//                            @Override
-//                            public void end(Animator animator3) {
-//                                animator3.stop();
-//                            }  
-//                        })
-//                        .build();
-                        
+     
                 timingSource.init();
                 animator1.start();
                 animator2.start();
