@@ -222,6 +222,7 @@ public class Home extends javax.swing.JFrame {
         controller.readTimerFromFile();
         controller.readScoreFromFile("Score");
         controller.getGamePlayState().renderScore();
+        controller.getGamePlayState().setNoti("");
         if(controller.getLevel() == 2){
             controller.getGamePlayState().setDefaultCounterTime(controller.getGamePlayState().getMin(), controller.getGamePlayState().getSec());
             controller.getGamePlayState().getTimer().restart();

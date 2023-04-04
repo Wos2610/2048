@@ -287,6 +287,9 @@ public class GamePlay extends JFrame{
     
     void renderBoard(){
         controller.getMatrix().output();
+        if(controller.isIsAdded() == true || controller.isIsMoved() == true){
+            noti.setText("");
+        }
         if(controller.isIsAdded() == false && controller.isIsMoved() == false && isContinue == 0){
             controller.getMessageState().setIsWin(0);
             controller.getMessageState().setMessageLabel("Lato-Black", "You Lose");
@@ -394,6 +397,11 @@ public class GamePlay extends JFrame{
         this.min = min;
     }
     
+    public void setNoti(String text){
+        controller.setFont("Lato-Regular", noti, 16);
+        noti.setForeground(new Color(182, 184, 192));
+        noti.setText(text);
+    }
     
     void setDefaultCounterTime(int m, int s){
         this.sec = s;
@@ -425,7 +433,7 @@ public class GamePlay extends JFrame{
                     if(controller.isIsFirst2048() == 1){
                         controller.getMessageState().setIsWin(0);
                         controller.getMessageState().setMessageLabel("Lato-Black", "You Lose");
-                        controller.getMessageState().setGuideLabel("Lato-Regular","Click OK to continue");
+                        controller.getMessageState().setGuideLabel("Lato-Regular","Click OK to restart a new game");
                         controller.getMessageState().setImageLabel("UI/lose.png");
                         controller.getMessageState().setVisible(true);
                     }
@@ -488,6 +496,7 @@ public class GamePlay extends JFrame{
         panelRound17 = new View.PanelRound();
         jLabel2 = new javax.swing.JLabel();
         highestScoreLabel = new javax.swing.JLabel();
+        noti = new javax.swing.JLabel();
         panel3 = new javax.swing.JPanel();
         panel4 = new javax.swing.JPanel();
         panelRound1 = new View.PanelRound();
@@ -651,6 +660,11 @@ public class GamePlay extends JFrame{
                 .addContainerGap())
         );
 
+        noti.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        noti.setText("jLabel3");
+        noti.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        noti.setPreferredSize(new java.awt.Dimension(200, 40));
+
         javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
         panel1.setLayout(panel1Layout);
         panel1Layout.setHorizontalGroup(
@@ -662,13 +676,15 @@ public class GamePlay extends JFrame{
                 .addComponent(colonLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(secLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 265, Short.MAX_VALUE)
-                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel1Layout.createSequentialGroup()
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
+                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(panel1Layout.createSequentialGroup()
                         .addComponent(panelRound18, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(panelRound17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel1Layout.createSequentialGroup()
+                    .addGroup(panel1Layout.createSequentialGroup()
+                        .addComponent(noti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(61, 61, 61)
                         .addComponent(homeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(undoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -684,10 +700,12 @@ public class GamePlay extends JFrame{
                     .addComponent(panelRound18, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(panelRound17, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(restartLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(undoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(homeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(restartLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(undoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(homeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(noti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -1117,35 +1135,35 @@ public class GamePlay extends JFrame{
     }//GEN-LAST:event_restartLabelMouseExited
 
     private void topLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_topLabelMouseEntered
-        controller.addImage("UI/white_arrow_up.png", topLabel, "");
+        //controller.addImage("UI/white_arrow_up.png", topLabel, "");
     }//GEN-LAST:event_topLabelMouseEntered
 
     private void topLabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_topLabelMouseExited
-        controller.addImage("UI/black_arrow_up.png", topLabel, "");
+        //controller.addImage("UI/black_arrow_up.png", topLabel, "");
     }//GEN-LAST:event_topLabelMouseExited
 
     private void rightLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rightLabelMouseEntered
-        controller.addImage("UI/white_arrow_right.png", rightLabel, "");
+        //controller.addImage("UI/white_arrow_right.png", rightLabel, "");
     }//GEN-LAST:event_rightLabelMouseEntered
 
     private void rightLabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rightLabelMouseExited
-        controller.addImage("UI/black_arrow_right.png", rightLabel, "");
+        //controller.addImage("UI/black_arrow_right.png", rightLabel, "");
     }//GEN-LAST:event_rightLabelMouseExited
 
     private void bottomLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bottomLabelMouseEntered
-        controller.addImage("UI/white_arrow_down.png", bottomLabel, "");
+        //controller.addImage("UI/white_arrow_down.png", bottomLabel, "");
     }//GEN-LAST:event_bottomLabelMouseEntered
 
     private void bottomLabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bottomLabelMouseExited
-        controller.addImage("UI/black_arrow_down.png", bottomLabel, "");
+        //controller.addImage("UI/black_arrow_down.png", bottomLabel, "");
     }//GEN-LAST:event_bottomLabelMouseExited
 
     private void leftLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_leftLabelMouseEntered
-        controller.addImage("UI/white_arrow_left.png", leftLabel, "");
+        //controller.addImage("UI/white_arrow_left.png", leftLabel, "");
     }//GEN-LAST:event_leftLabelMouseEntered
 
     private void leftLabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_leftLabelMouseExited
-        controller.addImage("UI/black_arrow_left.png", leftLabel, "");
+        //controller.addImage("UI/black_arrow_left.png", leftLabel, "");
     }//GEN-LAST:event_leftLabelMouseExited
 
     /**
@@ -1209,6 +1227,7 @@ public class GamePlay extends JFrame{
     private javax.swing.JLabel label9;
     private javax.swing.JLabel leftLabel;
     private javax.swing.JLabel minLabel;
+    private javax.swing.JLabel noti;
     private javax.swing.JPanel panel1;
     private javax.swing.JPanel panel2;
     private javax.swing.JPanel panel3;

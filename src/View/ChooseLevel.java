@@ -39,6 +39,7 @@ public class ChooseLevel extends javax.swing.JFrame {
     void changeToGamePlay(){
         controller.renewMatrix();
         controller.getGamePlayState().renderBoard();
+        controller.getGamePlayState().setNoti("Press the arrow keys to play");
         controller.getGamePlayState().setVisible(true);
         controller.getChooseLevelState().setVisible(false);
         controller.getHomeState().setVisible(false);
@@ -160,6 +161,7 @@ public class ChooseLevel extends javax.swing.JFrame {
     }//GEN-LAST:event_label2MouseClicked
 
     private void label3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label3MouseClicked
+        controller.readScoreFromFile("Score");
         controller.setCurrentScore(0);
         controller.setIsFirst2048(1);
         choice = controller.getLevel();

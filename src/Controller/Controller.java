@@ -155,7 +155,7 @@ public class Controller {
             default -> {
             }
         }
-        System.out.println(isMoved);
+        //System.out.println(isMoved);
     }
     
     public void sumOfValue(KeyEvent e){
