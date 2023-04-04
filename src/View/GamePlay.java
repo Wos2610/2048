@@ -127,12 +127,13 @@ public class GamePlay extends JFrame{
         // Set size cua JFrame phu hop voi Component ben trong no
         this.pack();
         
+        panel4.requestFocusInWindow();
         panel4.addKeyListener(new KeyListener(){
             @Override
             public void keyPressed(KeyEvent e) {
                 TimingSource timingSource = new SwingTimerTimingSource();
                 Animator animator1 = new Animator.Builder(timingSource)
-                        .setDuration(1, TimeUnit.MILLISECONDS)
+                        .setDuration(5, TimeUnit.MILLISECONDS)
                         .addTarget(new TimingTargetAdapter(){
                             @Override
                             public void timingEvent(Animator source, double fraction) {
@@ -173,7 +174,7 @@ public class GamePlay extends JFrame{
                         .build();
                 
                 Animator animator2 = new Animator.Builder(timingSource)
-                        .setDuration(5, TimeUnit.MILLISECONDS)
+                        .setDuration(20, TimeUnit.MILLISECONDS)
                         .addTarget(new TimingTargetAdapter(){
                             @Override
                             public void timingEvent(Animator source, double fraction) {
@@ -187,6 +188,7 @@ public class GamePlay extends JFrame{
                                     controller.setIsMoved(false);
                                     renderBoard();
                                     controller.getMatrix().output();
+                                    
                                 } else {
                                     // hien thi thong bao
                                 }
@@ -196,6 +198,22 @@ public class GamePlay extends JFrame{
                             @Override
                             public void end(Animator animator2) {
                                 animator2.stop();
+                                switch (e.getKeyCode()) {
+                                    case KeyEvent.VK_LEFT -> {
+                                        controller.addImage("UI/black_arrow_left.png", leftLabel, "");
+                                    }
+                                    case KeyEvent.VK_RIGHT -> {
+                                        controller.addImage("UI/black_arrow_right.png", rightLabel, "");
+                                    }
+                                    case KeyEvent.VK_UP -> {
+                                        controller.addImage("UI/black_arrow_up.png", topLabel, "");
+                                    }
+                                    case KeyEvent.VK_DOWN -> {
+                                        controller.addImage("UI/black_arrow_down.png", bottomLabel, "");
+                                    }
+                                    default -> {
+                                    }
+                                } 
                             }  
                         })
                         .build();
@@ -205,7 +223,7 @@ public class GamePlay extends JFrame{
                 timingSource.init();
                 animator1.start();
                 animator2.start();
-                
+                System.out.println(animator1.isRunning() + " " + animator2.isRunning());
                 if(animator2.isRunning() == false && animator1.isRunning() == false){
                     switch (e.getKeyCode()) {
                         case KeyEvent.VK_LEFT -> {
@@ -224,27 +242,29 @@ public class GamePlay extends JFrame{
                         }
                     }
                 }
+                System.out.println(animator1.isRunning() + " " + animator2.isRunning());
             }
 
             @Override
             public void keyReleased(KeyEvent e) {
                 System.out.println("Release");
-                switch (e.getKeyCode()) {
-                    case KeyEvent.VK_LEFT -> {
-                        controller.addImage("UI/black_arrow_left.png", leftLabel, "");
-                    }
-                    case KeyEvent.VK_RIGHT -> {
-                        controller.addImage("UI/black_arrow_right.png", rightLabel, "");
-                    }
-                    case KeyEvent.VK_UP -> {
-                        controller.addImage("UI/black_arrow_up.png", topLabel, "");
-                    }
-                    case KeyEvent.VK_DOWN -> {
-                        controller.addImage("UI/black_arrow_down.png", bottomLabel, "");
-                    }
-                    default -> {
-                    }
-                } 
+                
+//                switch (e.getKeyCode()) {
+//                    case KeyEvent.VK_LEFT -> {
+//                        controller.addImage("UI/black_arrow_left.png", leftLabel, "");
+//                    }
+//                    case KeyEvent.VK_RIGHT -> {
+//                        controller.addImage("UI/black_arrow_right.png", rightLabel, "");
+//                    }
+//                    case KeyEvent.VK_UP -> {
+//                        controller.addImage("UI/black_arrow_up.png", topLabel, "");
+//                    }
+//                    case KeyEvent.VK_DOWN -> {
+//                        controller.addImage("UI/black_arrow_down.png", bottomLabel, "");
+//                    }
+//                    default -> {
+//                    }
+//                } 
             }
 
             @Override
@@ -253,7 +273,7 @@ public class GamePlay extends JFrame{
             }
         });
         
-        panel4.requestFocus();
+        panel4.requestFocusInWindow();
     }
     
     void renderBoard(){
@@ -1058,14 +1078,14 @@ public class GamePlay extends JFrame{
         controller.setCurrentScore(0);
         controller.setMatrix(new Matrix());
         renderBoard();
-        panel4.requestFocus();
+        panel4.requestFocusInWindow();
     }//GEN-LAST:event_restartLabelMouseClicked
 
     private void undoLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_undoLabelMouseClicked
         System.out.println("Undo");
         controller.setMatrix(controller.getPreMatrix());
         renderBoard();
-        panel4.requestFocus();
+        panel4.requestFocusInWindow();
     }//GEN-LAST:event_undoLabelMouseClicked
 
     private void homeLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeLabelMouseClicked

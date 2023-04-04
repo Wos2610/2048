@@ -37,7 +37,7 @@ public class Home extends javax.swing.JFrame {
     void initUI(){
         this.setSize(664, 550);
         this.setLocationRelativeTo(null);
-        System.out.println(this.getWidth() + " " + this.getHeight());
+        //System.out.println(this.getWidth() + " " + this.getHeight());
         controller.addImage("UI/Button_02.png", label2, "CONTINUE");
         controller.addImage("UI/Button_02.png", label3, "NEW GAME");
         controller.addImage("UI/Button_02.png", label4, "QUIT");
@@ -236,6 +236,7 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_label2MouseClicked
 
     private void label3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label3MouseClicked
+        controller.getChooseLevelState().restart();
         controller.getChooseLevelState().setVisible(true);
     }//GEN-LAST:event_label3MouseClicked
 

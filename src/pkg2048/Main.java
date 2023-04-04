@@ -10,7 +10,7 @@ public class Main {
     public static void main(String[] args) {
         //Matrix matrix = new Matrix();
         //matrix.output();
-        new Home().setVisible(true);
+        new IntroState().setVisible(true);
     }
     
 }

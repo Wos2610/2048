@@ -77,6 +77,7 @@ public class Message extends javax.swing.JFrame {
     
     void loseButtonLabel(){
         this.setVisible(false);
+        controller.getChooseLevelState().restart();
         controller.getGamePlayState().setVisible(false);
         controller.getChooseLevelState().setVisible(true);
     }

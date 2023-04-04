@@ -5,6 +5,7 @@
 package View;
 
 import Controller.Controller;
+import java.awt.Color;
 import javax.swing.*;
 
 /**
@@ -24,16 +25,21 @@ public class ChooseLevel extends javax.swing.JFrame {
         this.setTitle("Choose level");
         initComponents();
         initUI();
-        choice = controller.getLevel();
     }
 
+    void restart(){
+        isChoosed = false;
+        controller.setLevel(0);
+        controller.addImage("UI/infinity2.png", label1, "");
+        controller.addImage("UI/clock2.png", label2, "");
+    }
     void initUI(){
-        System.out.println(label1.getWidth() + " " + label1.getHeight());
-        System.out.println(label2.getWidth() + " " + label2.getHeight());
+        isChoosed = false;
+        controller.setLevel(0);
         controller.addImage("UI/infinity2.png", label1, "");
         controller.addImage("UI/clock2.png", label2, "");
         controller.addImage("UI/OK1.png", label3, "");
-        
+        textLabel.setForeground(new Color(182, 184, 192));
     }
     
     void changeToGamePlay(){
@@ -44,6 +50,16 @@ public class ChooseLevel extends javax.swing.JFrame {
         controller.getChooseLevelState().setVisible(false);
         controller.getHomeState().setVisible(false);
     }
+
+    public boolean isIsChoosed() {
+        return isChoosed;
+    }
+
+    public void setIsChoosed(boolean isChoosed) {
+        this.isChoosed = isChoosed;
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -170,8 +186,8 @@ public class ChooseLevel extends javax.swing.JFrame {
             textLabel.setText("You haven't selected the level");
         }
         else{
-            textLabel.setVisible(false);
             isChoosed = false;
+            textLabel.setVisible(false);
         }
         switch (choice) {
             case 1 -> {
