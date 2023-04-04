@@ -5,6 +5,7 @@
 package View;
 
 import Controller.Controller;
+import Controller.ResourceManager;
 import javax.swing.JLabel;
 
 /**
@@ -14,6 +15,7 @@ import javax.swing.JLabel;
 public class Message extends javax.swing.JFrame {
 
     Controller controller = Controller.getInstance();
+    private ResourceManager resourceManager = ResourceManager.getInstance();
     private int isWin = 0;
     /**
      * Creates new form Message
@@ -25,9 +27,9 @@ public class Message extends javax.swing.JFrame {
     }
     
     void initUI(){
-        controller.setFont("gothicb", messageLabel, 20);
-        controller.addImage("UI/OK1.png", buttonLabel, "");
-        controller.addImage("UI/crown.png", imageLabel, "");
+        resourceManager.loadFont("gothicb", messageLabel, 20);
+        resourceManager.loadImage("OK1", buttonLabel, "");
+        resourceManager.loadImage("crown", imageLabel, "");
     }
 
     public int getIsWin() {
@@ -57,17 +59,17 @@ public class Message extends javax.swing.JFrame {
     
     
     void setMessageLabel(String pathName, String m){
-        controller.setFont(pathName, messageLabel, 20);
+        resourceManager.loadFont(pathName, messageLabel, 20);
         messageLabel.setText(m);
     }
     
     void setGuideLabel(String pathName, String m){
-        controller.setFont(pathName, guideLabel, 16);
+        resourceManager.loadFont(pathName, guideLabel, 16);
         guideLabel.setText(m);
     }
     
     void setImageLabel(String pathName){
-        controller.addImage(pathName, imageLabel, "");
+        resourceManager.loadImage(pathName, imageLabel, "");
     }
     
     void winButtonLabel(){
@@ -173,11 +175,11 @@ public class Message extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonLabelMouseClicked
 
     private void buttonLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonLabelMouseEntered
-        controller.addImage("UI/OK.png", buttonLabel, "");
+        resourceManager.loadImage("OK", buttonLabel, "");
     }//GEN-LAST:event_buttonLabelMouseEntered
 
     private void buttonLabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonLabelMouseExited
-        controller.addImage("UI/OK1.png", buttonLabel, "");
+        resourceManager.loadImage("OK1", buttonLabel, "");
     }//GEN-LAST:event_buttonLabelMouseExited
 
     /**

@@ -5,6 +5,7 @@
 package View;
 
 import Controller.Controller;
+import Controller.ResourceManager;
 import java.awt.Color;
 import javax.swing.*;
 
@@ -15,6 +16,7 @@ import javax.swing.*;
 public class ChooseLevel extends javax.swing.JFrame {
 
     private Controller controller = Controller.getInstance();
+    private ResourceManager resourceManager = ResourceManager.getInstance();
     private int choice = 0;
     private boolean isChoosed = false;
     /**
@@ -30,15 +32,15 @@ public class ChooseLevel extends javax.swing.JFrame {
     void restart(){
         isChoosed = false;
         controller.setLevel(0);
-        controller.addImage("UI/infinity2.png", label1, "");
-        controller.addImage("UI/clock2.png", label2, "");
+        resourceManager.loadImage("infinity2", label1, "");
+        resourceManager.loadImage("clock2", label2, "");
     }
     void initUI(){
         isChoosed = false;
         controller.setLevel(0);
-        controller.addImage("UI/infinity2.png", label1, "");
-        controller.addImage("UI/clock2.png", label2, "");
-        controller.addImage("UI/OK1.png", label3, "");
+        resourceManager.loadImage("infinity2", label1, "");
+        resourceManager.loadImage("clock2", label2, "");
+        resourceManager.loadImage("OK1", label3, "");
         textLabel.setForeground(new Color(182, 184, 192));
     }
     
@@ -163,16 +165,16 @@ public class ChooseLevel extends javax.swing.JFrame {
     private void label1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label1MouseClicked
        isChoosed = true;
        textLabel.setText("");
-       controller.addImage("UI/infinity1.png", label1, "");
-       controller.addImage("UI/clock2.png", label2, "");
+       resourceManager.loadImage("infinity1", label1, "");
+       resourceManager.loadImage("clock2", label2, "");
        controller.setLevel(1);
     }//GEN-LAST:event_label1MouseClicked
 
     private void label2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label2MouseClicked
        isChoosed = true;
        textLabel.setText("");
-       controller.addImage("UI/infinity2.png", label1, "");
-       controller.addImage("UI/clock1.png", label2, "");
+       resourceManager.loadImage("infinity2", label1, "");
+       resourceManager.loadImage("clock1", label2, "");
        controller.setLevel(2);
     }//GEN-LAST:event_label2MouseClicked
 
@@ -205,30 +207,30 @@ public class ChooseLevel extends javax.swing.JFrame {
     }//GEN-LAST:event_label3MouseClicked
 
     private void label3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label3MouseEntered
-        controller.addImage("UI/Ok.png", label3, "");
+        resourceManager.loadImage("Ok", label3, "");
     }//GEN-LAST:event_label3MouseEntered
 
     private void label3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label3MouseExited
-        controller.addImage("UI/OK1.png", label3, "");
+        resourceManager.loadImage("OK1", label3, "");
     }//GEN-LAST:event_label3MouseExited
 
     private void label1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label1MouseEntered
 
         if(controller.getLevel() == 1){
-            controller.addImage("UI/infinity1.png", label1, "");
+            resourceManager.loadImage("infinity1", label1, "");
         }
         else{
-            controller.addImage("UI/infinity3.png", label1, "");
+            resourceManager.loadImage("infinity3", label1, "");
         }
         
     }//GEN-LAST:event_label1MouseEntered
 
     private void label1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label1MouseExited
         if(controller.getLevel() == 1){
-            controller.addImage("UI/infinity1.png", label1, "");
+            resourceManager.loadImage("infinity1", label1, "");
         }
         else{
-            controller.addImage("UI/infinity2.png", label1, "");
+            resourceManager.loadImage("infinity2", label1, "");
         }
         
 
@@ -236,20 +238,20 @@ public class ChooseLevel extends javax.swing.JFrame {
 
     private void label2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label2MouseEntered
         if(controller.getLevel() == 2){
-            controller.addImage("UI/clock1.png", label2, "");
+            resourceManager.loadImage("clock1", label2, "");
         }
         else{
-            controller.addImage("UI/clock3.png", label2, "");
+            resourceManager.loadImage("clock3", label2, "");
         }
         
     }//GEN-LAST:event_label2MouseEntered
 
     private void label2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label2MouseExited
         if(controller.getLevel() == 2){
-            controller.addImage("UI/clock1.png", label2, "");
+            resourceManager.loadImage("clock1", label2, "");
         }
         else{
-            controller.addImage("UI/clock2.png", label2, "");
+            resourceManager.loadImage("clock2", label2, "");
         }
         
     }//GEN-LAST:event_label2MouseExited

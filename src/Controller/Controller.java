@@ -45,6 +45,7 @@ public class Controller {
     private int secOfTimer;
     private int minOfTimer;
     private int isFirst2048;
+    private ResourceManager resourceManager;
     
     
     private static Controller instance = null;
@@ -364,33 +365,21 @@ public class Controller {
         Matrix preMatrix2 = new Matrix(IOBinary.readMatrixFromFile("Matrix.txt").getMatrixArray());
         setMatrix(preMatrix2);
     }
-    
-    public void addImage(String pathName, JLabel label, String text){
-        BufferedImage img = null;
-        try {
-            img = ImageIO.read(new File(pathName));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Image dimg = img.getScaledInstance(label.getWidth(), label.getHeight(),Image.SCALE_SMOOTH);
-        ImageIcon imageIcon = new ImageIcon(dimg);
-        label.setIcon(imageIcon);
-        label.setText(text);
-    }
+   
     
     public void keyPressAnimation(JLabel label, KeyEvent e){
         switch (e.getKeyCode()) {
             case KeyEvent.VK_LEFT -> {
-                this.addImage("UI/white_arrow_left.png", label, "");
+                resourceManager.loadImage("UI/white_arrow_left.png", label, "");
             }
             case KeyEvent.VK_RIGHT -> {
-                this.addImage("UI/white_arrow_right.png", label, "");
+                resourceManager.loadImage("UI/white_arrow_right.png", label, "");
             }
             case KeyEvent.VK_UP -> {
-                this.addImage("UI/white_arrow_up.png", label, "");
+                resourceManager.loadImage("UI/white_arrow_up.png", label, "");
             }
             case KeyEvent.VK_DOWN -> {
-               this.addImage("UI/white_arrow_down.png", label, "");
+               resourceManager.loadImage("UI/white_arrow_down.png", label, "");
             }
             default -> {
             }
@@ -488,22 +477,6 @@ public class Controller {
         }
     }
     
-    public void setFont(String pathname, JLabel label, float size){
-        // tạo một đối tượng Font trống
-        Font customFont = null;
-
-        try {
-            // load font từ file
-            customFont = Font.createFont(Font.TRUETYPE_FONT, new File("UI/" + pathname + ".ttf")).deriveFont(12f);
-            // đăng ký font với GraphicsEnvironment
-            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            ge.registerFont(customFont);
-        } catch (IOException | FontFormatException e) {
-            e.printStackTrace();
-        }
-
-        // sử dụng font
-        
-        label.setFont(customFont.deriveFont(size));
-    }
+    
+    
 }

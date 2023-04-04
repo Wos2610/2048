@@ -2,6 +2,7 @@ package View;
 
 import Controller.Controller;
 import Controller.IOBinary;
+import Controller.ResourceManager;
 import Model.Matrix;
 import java.awt.Color;
 import java.awt.*;
@@ -20,6 +21,7 @@ import org.jdesktop.swing.animation.timing.sources.SwingTimerTimingSource;
 public class GamePlay extends JFrame{
     
     private Controller controller = Controller.getInstance();
+    private ResourceManager resourceManager = ResourceManager.getInstance();
     private ArrayList<JLabel> boardLabel = new ArrayList<>();
     private ArrayList<PanelRound> boardPanel = new ArrayList<>();
     int n = controller.getMatrix().getN();
@@ -54,23 +56,23 @@ public class GamePlay extends JFrame{
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         
-        controller.addImage("UI/black_arrow_left.png", leftLabel, "");
-        controller.addImage("UI/black_arrow_right.png", rightLabel, "");
-        controller.addImage("UI/black_arrow_up.png", topLabel, "");
-        controller.addImage("UI/black_arrow_down.png", bottomLabel, "");
-        //controller.addImage("UI/left2.png", leftLabel, "");
+        resourceManager.loadImage("black_arrow_left", leftLabel, "");
+        resourceManager.loadImage("black_arrow_right", rightLabel, "");
+        resourceManager.loadImage("black_arrow_up", topLabel, "");
+        resourceManager.loadImage("black_arrow_down", bottomLabel, "");
+        //resourceManager.loadImage("left2", leftLabel, "");
         
-        controller.addImage("UI/Icon_Home1.png", homeLabel, "");
-        controller.addImage("UI/Icon_Left1.png", undoLabel, "");
-        controller.addImage("UI/Icon_Repeat1.png", restartLabel, "");
+        resourceManager.loadImage("Icon_Home1", homeLabel, "");
+        resourceManager.loadImage("Icon_Left1", undoLabel, "");
+        resourceManager.loadImage("Icon_Repeat1", restartLabel, "");
         
-        controller.setFont("gothicb", jLabel1, 16);
+        resourceManager.loadFont("gothicb", jLabel1, 16);
         jLabel1.setForeground(Color.WHITE);
-        controller.setFont("gothicb", jLabel2, 16);
+        resourceManager.loadFont("gothicb", jLabel2, 16);
         jLabel2.setForeground(Color.WHITE);
-        controller.setFont("RobotoMono-Medium", currentScoreLabel, 22);
+        resourceManager.loadFont("RobotoMono-Medium", currentScoreLabel, 22);
         currentScoreLabel.setForeground(Color.WHITE);
-        controller.setFont("RobotoMono-Medium", highestScoreLabel, 22);
+        resourceManager.loadFont("RobotoMono-Medium", highestScoreLabel, 22);
         highestScoreLabel.setForeground(Color.WHITE);
         
         panelRound17.setColor(204, 204, 204,204, 204, 204);
@@ -98,7 +100,7 @@ public class GamePlay extends JFrame{
         boardLabel.add(label16);
         
         for(int i = 0; i < 16; i++){
-            controller.setFont("RobotoMono-Medium", boardLabel.get(i), 20);
+            resourceManager.loadFont("RobotoMono-Medium", boardLabel.get(i), 20);
             boardLabel.get(i).setForeground(Color.WHITE);
         }
 
@@ -148,16 +150,16 @@ public class GamePlay extends JFrame{
                                 
                                 switch (e.getKeyCode()) {
                                     case KeyEvent.VK_LEFT -> {
-                                        controller.addImage("UI/white_arrow_left.png", leftLabel, "");
+                                        resourceManager.loadImage("white_arrow_left", leftLabel, "");
                                     }
                                     case KeyEvent.VK_RIGHT -> {
-                                        controller.addImage("UI/white_arrow_right.png", rightLabel, "");
+                                        resourceManager.loadImage("white_arrow_right", rightLabel, "");
                                     }
                                     case KeyEvent.VK_UP -> {
-                                        controller.addImage("UI/white_arrow_up.png", topLabel, "");
+                                        resourceManager.loadImage("white_arrow_up", topLabel, "");
                                     }
                                     case KeyEvent.VK_DOWN -> {
-                                       controller.addImage("UI/white_arrow_down.png", bottomLabel, "");
+                                       resourceManager.loadImage("white_arrow_down", bottomLabel, "");
                                     }
                                     default -> {
                                     }
@@ -174,7 +176,7 @@ public class GamePlay extends JFrame{
                         .build();
                 
                 Animator animator2 = new Animator.Builder(timingSource)
-                        .setDuration(20, TimeUnit.MILLISECONDS)
+                        .setDuration(15, TimeUnit.MILLISECONDS)
                         .addTarget(new TimingTargetAdapter(){
                             @Override
                             public void timingEvent(Animator source, double fraction) {
@@ -200,16 +202,16 @@ public class GamePlay extends JFrame{
                                 animator2.stop();
                                 switch (e.getKeyCode()) {
                                     case KeyEvent.VK_LEFT -> {
-                                        controller.addImage("UI/black_arrow_left.png", leftLabel, "");
+                                        resourceManager.loadImage("black_arrow_left", leftLabel, "");
                                     }
                                     case KeyEvent.VK_RIGHT -> {
-                                        controller.addImage("UI/black_arrow_right.png", rightLabel, "");
+                                        resourceManager.loadImage("black_arrow_right", rightLabel, "");
                                     }
                                     case KeyEvent.VK_UP -> {
-                                        controller.addImage("UI/black_arrow_up.png", topLabel, "");
+                                        resourceManager.loadImage("black_arrow_up", topLabel, "");
                                     }
                                     case KeyEvent.VK_DOWN -> {
-                                        controller.addImage("UI/black_arrow_down.png", bottomLabel, "");
+                                        resourceManager.loadImage("black_arrow_down", bottomLabel, "");
                                     }
                                     default -> {
                                     }
@@ -227,16 +229,16 @@ public class GamePlay extends JFrame{
                 if(animator2.isRunning() == false && animator1.isRunning() == false){
                     switch (e.getKeyCode()) {
                         case KeyEvent.VK_LEFT -> {
-                            controller.addImage("UI/black_arrow_left.png", leftLabel, "");
+                            resourceManager.loadImage("black_arrow_left", leftLabel, "");
                         }
                         case KeyEvent.VK_RIGHT -> {
-                            controller.addImage("UI/black_arrow_right.png", rightLabel, "");
+                            resourceManager.loadImage("black_arrow_right", rightLabel, "");
                         }
                         case KeyEvent.VK_UP -> {
-                            controller.addImage("UI/black_arrow_up.png", topLabel, "");
+                            resourceManager.loadImage("black_arrow_up", topLabel, "");
                         }
                         case KeyEvent.VK_DOWN -> {
-                            controller.addImage("UI/black_arrow_down.png", bottomLabel, "");
+                            resourceManager.loadImage("black_arrow_down", bottomLabel, "");
                         }
                         default -> {
                         }
@@ -251,16 +253,16 @@ public class GamePlay extends JFrame{
                 
 //                switch (e.getKeyCode()) {
 //                    case KeyEvent.VK_LEFT -> {
-//                        controller.addImage("UI/black_arrow_left.png", leftLabel, "");
+//                        resourceManager.loadImage("black_arrow_left", leftLabel, "");
 //                    }
 //                    case KeyEvent.VK_RIGHT -> {
-//                        controller.addImage("UI/black_arrow_right.png", rightLabel, "");
+//                        resourceManager.loadImage("black_arrow_right", rightLabel, "");
 //                    }
 //                    case KeyEvent.VK_UP -> {
-//                        controller.addImage("UI/black_arrow_up.png", topLabel, "");
+//                        resourceManager.loadImage("black_arrow_up", topLabel, "");
 //                    }
 //                    case KeyEvent.VK_DOWN -> {
-//                        controller.addImage("UI/black_arrow_down.png", bottomLabel, "");
+//                        resourceManager.loadImage("black_arrow_down", bottomLabel, "");
 //                    }
 //                    default -> {
 //                    }
@@ -284,8 +286,8 @@ public class GamePlay extends JFrame{
         if(controller.isIsAdded() == false && controller.isIsMoved() == false && isContinue == 0){
             controller.getMessageState().setIsWin(0);
             controller.getMessageState().setMessageLabel("Lato-Black", "You Lose");
-            controller.getMessageState().setGuideLabel("Lato-Regular","Click OK to continue");
-            controller.getMessageState().setImageLabel("UI/lose.png");
+            controller.getMessageState().setGuideLabel("Lato-Regular","Click OK to restart a new game");
+            controller.getMessageState().setImageLabel("lose");
             controller.getMessageState().setVisible(true);
         }
         int index = 0;
@@ -389,7 +391,7 @@ public class GamePlay extends JFrame{
     }
     
     public void setNoti(String text){
-        controller.setFont("Lato-Regular", noti, 16);
+        resourceManager.loadFont("Lato-Regular", noti, 16);
         noti.setForeground(new Color(182, 184, 192));
         noti.setText(text);
     }
@@ -425,7 +427,7 @@ public class GamePlay extends JFrame{
                         controller.getMessageState().setIsWin(0);
                         controller.getMessageState().setMessageLabel("Lato-Black", "You Lose");
                         controller.getMessageState().setGuideLabel("Lato-Regular","Click OK to restart a new game");
-                        controller.getMessageState().setImageLabel("UI/lose.png");
+                        controller.getMessageState().setImageLabel("lose");
                         controller.getMessageState().setVisible(true);
                     }
                 }
@@ -1102,59 +1104,59 @@ public class GamePlay extends JFrame{
     }//GEN-LAST:event_homeLabelMouseClicked
 
     private void homeLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeLabelMouseEntered
-        controller.addImage("UI/Icon_Home.png", homeLabel, "");
+        resourceManager.loadImage("Icon_Home", homeLabel, "");
     }//GEN-LAST:event_homeLabelMouseEntered
 
     private void homeLabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeLabelMouseExited
-        controller.addImage("UI/Icon_Home1.png", homeLabel, "");
+        resourceManager.loadImage("Icon_Home1", homeLabel, "");
     }//GEN-LAST:event_homeLabelMouseExited
 
     private void undoLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_undoLabelMouseEntered
-        controller.addImage("UI/Icon_Left.png", undoLabel, "");
+        resourceManager.loadImage("Icon_Left", undoLabel, "");
     }//GEN-LAST:event_undoLabelMouseEntered
 
     private void undoLabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_undoLabelMouseExited
-        controller.addImage("UI/Icon_Left1.png", undoLabel, "");
+        resourceManager.loadImage("Icon_Left1", undoLabel, "");
     }//GEN-LAST:event_undoLabelMouseExited
 
     private void restartLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_restartLabelMouseEntered
-        controller.addImage("UI/Icon_Repeat.png", restartLabel, "");
+        resourceManager.loadImage("Icon_Repeat", restartLabel, "");
     }//GEN-LAST:event_restartLabelMouseEntered
 
     private void restartLabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_restartLabelMouseExited
-         controller.addImage("UI/Icon_Repeat1.png", restartLabel, "");
+         resourceManager.loadImage("Icon_Repeat1", restartLabel, "");
     }//GEN-LAST:event_restartLabelMouseExited
 
     private void topLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_topLabelMouseEntered
-        //controller.addImage("UI/white_arrow_up.png", topLabel, "");
+        //resourceManager.loadImage("white_arrow_up", topLabel, "");
     }//GEN-LAST:event_topLabelMouseEntered
 
     private void topLabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_topLabelMouseExited
-        //controller.addImage("UI/black_arrow_up.png", topLabel, "");
+        //resourceManager.loadImage("black_arrow_up", topLabel, "");
     }//GEN-LAST:event_topLabelMouseExited
 
     private void rightLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rightLabelMouseEntered
-        //controller.addImage("UI/white_arrow_right.png", rightLabel, "");
+        //resourceManager.loadImage("white_arrow_right", rightLabel, "");
     }//GEN-LAST:event_rightLabelMouseEntered
 
     private void rightLabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rightLabelMouseExited
-        //controller.addImage("UI/black_arrow_right.png", rightLabel, "");
+        //resourceManager.loadImage("black_arrow_right", rightLabel, "");
     }//GEN-LAST:event_rightLabelMouseExited
 
     private void bottomLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bottomLabelMouseEntered
-        //controller.addImage("UI/white_arrow_down.png", bottomLabel, "");
+        //resourceManager.loadImage("white_arrow_down", bottomLabel, "");
     }//GEN-LAST:event_bottomLabelMouseEntered
 
     private void bottomLabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bottomLabelMouseExited
-        //controller.addImage("UI/black_arrow_down.png", bottomLabel, "");
+        //resourceManager.loadImage("black_arrow_down", bottomLabel, "");
     }//GEN-LAST:event_bottomLabelMouseExited
 
     private void leftLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_leftLabelMouseEntered
-        //controller.addImage("UI/white_arrow_left.png", leftLabel, "");
+        //resourceManager.loadImage("white_arrow_left", leftLabel, "");
     }//GEN-LAST:event_leftLabelMouseEntered
 
     private void leftLabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_leftLabelMouseExited
-        //controller.addImage("UI/black_arrow_left.png", leftLabel, "");
+        //resourceManager.loadImage("black_arrow_left", leftLabel, "");
     }//GEN-LAST:event_leftLabelMouseExited
 
     /**

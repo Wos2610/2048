@@ -2,6 +2,7 @@ package View;
 
 import Controller.Controller;
 import Controller.IOBinary;
+import Controller.ResourceManager;
 import Model.Matrix;
 import java.awt.*;
 import java.io.File;
@@ -19,12 +20,16 @@ public class Home extends javax.swing.JFrame {
      * Creates new form Home
      */
     private Controller controller = Controller.getInstance();
+    private ResourceManager resourceManager = ResourceManager.getInstance();
     public Home() {
         initComponents();
         initUI();
         initState();
     }
     
+    void loadData(){
+        
+    }
     void initState(){
         controller.setHomeState(this);
         controller.loadMatrixFromFile();
@@ -38,17 +43,17 @@ public class Home extends javax.swing.JFrame {
         this.setSize(664, 550);
         this.setLocationRelativeTo(null);
         //System.out.println(this.getWidth() + " " + this.getHeight());
-        controller.addImage("UI/Button_02.png", label2, "CONTINUE");
-        controller.addImage("UI/Button_02.png", label3, "NEW GAME");
-        controller.addImage("UI/Button_02.png", label4, "QUIT");
-//        addImagePanel("UI/Frame", panel3);
-        controller.addImage("UI/cute.png", titleLabel, "");
+        resourceManager.loadImage("Button_02", label2, "CONTINUE");
+        resourceManager.loadImage("Button_02", label3, "NEW GAME");
+        resourceManager.loadImage("Button_02", label4, "QUIT");
+//        addImagePanel("Frame", panel3);
+        resourceManager.loadImage("cute", titleLabel, "");
         titleLabel.setText("");
-        controller.setFont("gothicb", label2, 26);
+        resourceManager.loadFont("gothicb", label2, 26);
         label2.setForeground(new Color(217,242,246));
-        controller.setFont("gothicb", label3, 26);
+        resourceManager.loadFont("gothicb", label3, 26);
         label3.setForeground(new Color(217,242,246));
-        controller.setFont("gothicb", label4, 26);
+        resourceManager.loadFont("gothicb", label4, 26);
         label4.setForeground(new Color(217,242,246));
     }
     
@@ -247,27 +252,27 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_label4MouseClicked
 
     private void label2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label2MouseEntered
-        controller.addImage("UI/Button_01.png", label2, "CONTINUE");
+        resourceManager.loadImage("Button_01", label2, "CONTINUE");
     }//GEN-LAST:event_label2MouseEntered
 
     private void label2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label2MouseExited
-        controller.addImage("UI/Button_02.png", label2, "CONTINUE");
+        resourceManager.loadImage("Button_02", label2, "CONTINUE");
     }//GEN-LAST:event_label2MouseExited
 
     private void label3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label3MouseEntered
-        controller.addImage("UI/Button_01.png", label3, "NEW GAME");
+        resourceManager.loadImage("Button_01", label3, "NEW GAME");
     }//GEN-LAST:event_label3MouseEntered
 
     private void label3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label3MouseExited
-        controller.addImage("UI/Button_02.png", label3, "NEW GAME");
+        resourceManager.loadImage("Button_02", label3, "NEW GAME");
     }//GEN-LAST:event_label3MouseExited
 
     private void label4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label4MouseEntered
-        controller.addImage("UI/Button_01.png", label4, "QUIT");
+        resourceManager.loadImage("Button_01", label4, "QUIT");
     }//GEN-LAST:event_label4MouseEntered
 
     private void label4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label4MouseExited
-        controller.addImage("UI/Button_02.png", label4, "QUIT");
+        resourceManager.loadImage("Button_02", label4, "QUIT");
     }//GEN-LAST:event_label4MouseExited
 
     /**
