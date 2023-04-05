@@ -5,9 +5,7 @@
         <group>
             <file>file:/D:/Documents/NetBeansProjects/2048/src/pkg2048/Main.java</file>
             <file>file:/D:/Documents/NetBeansProjects/2048/src/View/GamePlay.java</file>
-            <file>file:/D:/Documents/NetBeansProjects/2048/src/View/ChooseLevel.java</file>
-            <file>file:/D:/Documents/NetBeansProjects/2048/src/View/Home.java</file>
-            <file>file:/D:/Documents/NetBeansProjects/2048/src/View/Message.java</file>
+            <file>file:/D:/Documents/NetBeansProjects/2048/src/Controller/Controller.java</file>
         </group>
     </open-files>
 </project-private>

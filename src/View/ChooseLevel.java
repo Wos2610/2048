@@ -51,6 +51,7 @@ public class ChooseLevel extends javax.swing.JFrame {
         controller.getGamePlayState().setVisible(true);
         controller.getChooseLevelState().setVisible(false);
         controller.getHomeState().setVisible(false);
+        controller.getMessageState().setVisible(false);
     }
 
     public boolean isIsChoosed() {

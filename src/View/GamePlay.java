@@ -29,6 +29,7 @@ public class GamePlay extends JFrame{
     private int sec;
     private int min;
     private int isContinue = 1;
+    private boolean isMove = false;
     private Timer timer;
     private int[][] colors = {
         {229, 228, 226, 213, 211, 209}, // color for value 0
@@ -164,10 +165,16 @@ public class GamePlay extends JFrame{
                                 Matrix preMatrix1 = new Matrix(controller.getMatrix().getMatrixArray());
                                 controller.setPreMatrix(preMatrix1);
                                 controller.moveNumber(e);
+                                if(controller.isIsMoved() == true){
+                                    isMove = true;
+                                }
                                 Matrix preMatrix2 = new Matrix(controller.getMatrix().getMatrixArray());
                                 controller.setPreMatrix(preMatrix2);
                                 controller.sumOfValue(e);
                                 controller.moveNumber(e);
+                                if(controller.isIsMoved() == true){
+                                    isMove = true;
+                                }
                                 renderBoard();
                                 
                                 switch (e.getKeyCode()) {
@@ -203,13 +210,13 @@ public class GamePlay extends JFrame{
                             @Override
                             public void timingEvent(Animator source, double fraction) {
                                 System.out.println("Delay");
-                                if (controller.isIsMoved() == true || controller.isIsAdded() == true) {
+                                if (isMove == true) {
                                     Matrix preMatrix3 = new Matrix(controller.getMatrix().getMatrixArray());
                                     controller.setPreMatrix(preMatrix3);
                                     controller.addNewNumber();
                                     controller.addNewPanelAnimation(boardPanel.get(controller.getNewPanelIndex()));
                                     //controller.returnPrePosition(boardPanel.get(controller.getNewPanelIndex()));
-                                    controller.setIsMoved(false);
+                                    isMove = false;
                                     renderBoard();
                                     controller.getMatrix().output();
                                     

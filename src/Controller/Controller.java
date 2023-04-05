@@ -31,7 +31,6 @@ public class Controller {
     private int n = Matrix.getN();
     private boolean isMoved = false;
     private boolean isAdded = false;
-    private Animator animator;
     private int newPanelIndex;
     private Rectangle pre;
     private int currentScore;
@@ -83,6 +82,7 @@ public class Controller {
     
     
     public void moveNumber(KeyEvent e){
+        System.out.println("Move");
         isMoved = false;
         switch (e.getKeyCode()) {
             case KeyEvent.VK_LEFT -> {
@@ -156,7 +156,6 @@ public class Controller {
             default -> {
             }
         }
-        //System.out.println(isMoved);
     }
     
     public void sumOfValue(KeyEvent e){
@@ -214,7 +213,7 @@ public class Controller {
             default -> {
             }
         } 
-        System.out.println(isAdded);
+
         if(currentScore > highestScore){
             highestScore = currentScore;
         }
@@ -332,35 +331,22 @@ public class Controller {
         this.isFirst2048 = isFirst2048;
     }
     
-
+    TimingSource timingSource = new SwingTimerTimingSource();
+    private Animator animator;
     public void addNewPanelAnimation(PanelRound panel){
         if(animator != null && animator.isRunning()){
             animator.stop();
         }
-        panel.addComponentListener(new ComponentAdapter(){
-            @Override
-            public void componentResized(ComponentEvent e) {
-                int width = panel.getWidth();
-                int height = panel.getHeight();
-                int x = panel.getX() + panel.getWidth() / 2 - width / 2;
-                int y = panel.getY() + panel.getHeight() / 2 - height / 2;
-                panel.setBounds(x, y, width, height);
-            }
-            
-        });
-        
-        TimingSource timingSource = new SwingTimerTimingSource();
         animator = new Animator.Builder(timingSource)
-                .setDuration(400, TimeUnit.MILLISECONDS)
+                .setDuration(50, TimeUnit.MILLISECONDS)
                 .setInterpolator(new SplineInterpolator(0.4, 0.0, 0.2, 1.0))
                 .addTarget(PropertySetter.getTarget(panel, "size", new Dimension(0, 0), new Dimension(70, 70) ))
                 .build();
         
         timingSource.init();
         animator.start();
-        
     }
-    
+
     public void loadMatrixFromFile(){
         Matrix preMatrix2 = new Matrix(IOBinary.readMatrixFromFile("Matrix.txt").getMatrixArray());
         setMatrix(preMatrix2);

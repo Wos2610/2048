@@ -82,6 +82,7 @@ public class Message extends javax.swing.JFrame {
         controller.getChooseLevelState().restart();
         controller.getGamePlayState().setVisible(false);
         controller.getChooseLevelState().setVisible(true);
+        this.setVisible(false);
     }
 
     /**
